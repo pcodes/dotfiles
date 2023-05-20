@@ -36,3 +36,9 @@ vim.g.smarttab = 4
 vim.o.termguicolors = true
 vim.cmd [[colorscheme catppuccin-mocha]]
 
+vim.filetype.add({
+    pattern= {
+        ['.*zshrc'] = 'zsh'
+    }
+})
+

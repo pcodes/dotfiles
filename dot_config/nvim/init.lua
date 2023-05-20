@@ -17,10 +17,17 @@ require('lazy').setup(
     'plugins',
     {
         checker = {
-            enabled = true
+            enabled = true,
+            notify = false
         }
     }
 )
+
+-- Create autocommand for running chezmoi apply on save
+vim.api.nvim_create_autocmd({"BufWritePost"}, {
+    pattern = '*.local/share/chezmoi/*',
+    command = 'silent ! chezmoi apply --source-path %',
+})
 
 -- Import all of the submodules
 require('settings')

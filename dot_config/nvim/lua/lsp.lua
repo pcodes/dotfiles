@@ -1,20 +1,20 @@
--- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
-
 require("mason").setup()
 require("mason-lspconfig").setup({
     ensure_installed = {
-        'lua_ls', 'gopls', 'jsonls', 'yamlls', 'rust_analyzer'
+        'lua_ls', 'gopls', 'jsonls', 'yamlls', 'rust_analyzer', 'bashls'
     }
 })
 
 require("mason-null-ls").setup({
-    ensure_installed = { "stylua", 'luacheck', 'rustfmt' },
+    ensure_installed = { "stylua", 'luacheck', 'rustfmt', 'shellcheck', 'shfmt' },
     automatic_setup = true
+})
+
+require("neodev").setup({
 })
 
 -- local capabilities = vim.lsp.protocol.make_client_capabilities()
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
 
 require('mason-lspconfig').setup_handlers({
     function(server_name)
@@ -22,32 +22,37 @@ require('mason-lspconfig').setup_handlers({
             capabilities = capabilities
         })
     end,
-    ["lua_ls"] = function()
-        require('lspconfig').lua_ls.setup({
-            settings = {
-                Lua = {
-                    runtime = {
-                        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                        version = 'LuaJIT',
-                    },
-                    diagnostics = {
-                        -- Get the language server to recognize the `vim` global
-                        globals = { 'vim' },
-                    },
-                    workspace = {
-                        -- Make the server aware of Neovim runtime files
-                        library = vim.api.nvim_get_runtime_file("", true),
-                        checkThirdParty = false
-                    },
-                    -- Do not send telemetry data containing a randomized but unique identifier
-                    telemetry = {
-                        enable = false,
-                    },
-                },
-                capabilities = capabilities
-            }
+    ['bashls'] = function()
+        require('lspconfig').bashls.setup({
+            filetypes = { 'sh', 'zsh' }
         })
     end
+    -- ["lua_ls"] = function()
+    --     require('lspconfig').lua_ls.setup({
+    --         settings = {
+    --             Lua = {
+    --                 runtime = {
+    --                     -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+    --                     version = 'LuaJIT',
+    --                 },
+    --                 diagnostics = {
+    --                     -- Get the language server to recognize the `vim` global
+    --                     globals = { 'vim' },
+    --                 },
+    --                 workspace = {
+    --                     -- Make the server aware of Neovim runtime files
+    --                     library = vim.api.nvim_get_runtime_file("", true),
+    --                     checkThirdParty = false
+    --                 },
+    --                 -- Do not send telemetry data containing a randomized but unique identifier
+    --                 telemetry = {
+    --                     enable = false,
+    --                 },
+    --             },
+    --             capabilities = capabilities
+    --         }
+    --     })
+    -- end
 })
 
 
@@ -63,4 +68,3 @@ require('trouble').setup {}
 --     },
 --   }
 -- }
-
