@@ -11,12 +11,14 @@ local register_prefix = function(keybinding, name)
     })
 end
 
-
 -- ---Arrow key bindings---
 keymap("n", "<Up>", "<C-w><C-k>", { desc = 'Move cursor up window' })
 keymap("n", "<Down>", "<C-w><C-j>", { desc = 'Move cursor down window' })
 keymap("n", "<Left>", "<C-w><C-h>", { desc = 'Move cursor left window' })
 keymap("n", "<Right>", "<C-w><C-l>", { desc = 'Move cursor right window' })
+
+-- ---Hop bindings---
+keymap("n", "<leader>h", ":HopWord<cr>")
 
 -- ---Telescope bindings---
 register_prefix("<leader>f", "+telescope")
@@ -28,7 +30,7 @@ register_prefix("<leader>b", "+buffer")
 keymap("n", "bn", ":BufferLineCycleNext<cr>")
 keymap("n", "bp", ":BufferLineCyclePrev<cr>")
 
-
+-- ---Trouble bindings---
 register_prefix("<leader>x", "+trouble")
 keymap("n", "<leader>xx", "<cmd>TroubleToggle<cr>",
     { silent = true, noremap = true }

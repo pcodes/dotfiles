@@ -17,6 +17,7 @@ return {
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     'mfussenegger/nvim-dap',
     'jose-elias-alvarez/null-ls.nvim',
+    {'phaazon/hop.nvim', config=true},
     'folke/neodev.nvim',
     'jay-babu/mason-null-ls.nvim',
     {
