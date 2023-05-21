@@ -1,5 +1,5 @@
 README.md
 {{- if ne .chezmoi.hostname "fedora" }}
-i3
-alacritty
+.config/i3
+.config/alacritty
 {{- end}}
