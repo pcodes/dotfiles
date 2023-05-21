@@ -21,3 +21,4 @@
     url = "https://github.com/romkatv/powerlevel10k/archive/v1.18.0.tar.gz"
     exact = true
     stripComponents = 1
+    exclude=["*.zwc"]

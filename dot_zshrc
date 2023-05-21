@@ -27,6 +27,8 @@ else
     ZSH_THEME="robbyrussell"
 fi
 
+DISABLE_AUTO_UPDATE=true
+
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
