@@ -1,6 +1,7 @@
 return {
     { 'nvim-tree/nvim-web-devicons', lazy = true },
     { "catppuccin/nvim",              name = "catppuccin", lazy = true, priority = 1000 },
+    'folke/tokyonight.nvim',
     'nvim-lualine/lualine.nvim',
     { 'nvim-treesitter/nvim-treesitter',          build = ':TSUpdate' },
     'neovim/nvim-lspconfig',
