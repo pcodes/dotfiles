@@ -1,12 +1,12 @@
 require("mason").setup()
 require("mason-lspconfig").setup({
     ensure_installed = {
-        'lua_ls', 'gopls', 'jsonls', 'yamlls', 'rust_analyzer', 'bashls'
+        'lua_ls', 'jsonls', 'yamlls', 'bashls'
     }
 })
 
 require("mason-null-ls").setup({
-    ensure_installed = { "stylua", 'luacheck', 'rustfmt', 'shellcheck', 'shfmt', 'prettier' },
+    ensure_installed = { "stylua", 'luacheck', 'shellcheck', 'shfmt', 'prettier' },
     automatic_setup = true
 })
 

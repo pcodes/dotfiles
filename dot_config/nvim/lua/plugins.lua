@@ -4,10 +4,7 @@ return {
     'nvim-lualine/lualine.nvim',
     { 'nvim-treesitter/nvim-treesitter',          build = ':TSUpdate' },
     'neovim/nvim-lspconfig',
-    {
-        "williamboman/mason.nvim",
-        build = ":MasonUpdate" -- :MasonUpdate updates registry contents
-    },
+    "williamboman/mason.nvim",
     'williamboman/mason-lspconfig.nvim',
     {
         'nvim-telescope/telescope.nvim',
