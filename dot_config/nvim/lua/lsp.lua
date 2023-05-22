@@ -6,7 +6,7 @@ require("mason-lspconfig").setup({
 })
 
 require("mason-null-ls").setup({
-    ensure_installed = { "stylua", 'luacheck', 'rustfmt', 'shellcheck', 'shfmt' },
+    ensure_installed = { "stylua", 'luacheck', 'rustfmt', 'shellcheck', 'shfmt', 'prettier' },
     automatic_setup = true
 })
 
