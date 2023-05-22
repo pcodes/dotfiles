@@ -40,6 +40,8 @@ plugins=(
     dnf
 )
 
+source $HOME/.zshrc.local
+
 source $ZSH/oh-my-zsh.sh
 
 # Set auto-complete shortcut to ctrl-space
