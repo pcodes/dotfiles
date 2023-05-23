@@ -1,3 +1,9 @@
+local M = {}
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities()
+M.capabilities = capabilities
+
 require("mason").setup()
 require("mason-lspconfig").setup({
     ensure_installed = {
@@ -41,13 +47,4 @@ require('mason-lspconfig').setup_handlers({
 
 require('trouble').setup {}
 
--- require('lspconfig').yamlls.setup {
---     on_attach = on_attach,
---   settings = {
---     yaml = {
---       schemas = {
---         ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "~/uss_enterprise/*"
---       },
---     },
---   }
--- }
+return M
