@@ -3,4 +3,6 @@ require('nvim-treesitter.configs').setup {
     highlight={enable=true}
 }
 
+require("nvim-treesitter.install").prefer_git = true
+
 require('go').setup()
