@@ -16,6 +16,7 @@ return {
     'mfussenegger/nvim-dap',
     'jose-elias-alvarez/null-ls.nvim',
     {'phaazon/hop.nvim', config=true},
+    {'j-hui/fidget.nvim', config=true},
     'folke/neodev.nvim',
     'jay-babu/mason-null-ls.nvim',
     {
