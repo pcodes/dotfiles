@@ -16,7 +16,7 @@ export FPATH="$HOME/.zsh_completions:$FPATH"
 
 export ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 
-export TERM=xterm-256color
+export TERM=xterm-kitty
 
 export GOPATH="$HOME/.go"
 
@@ -96,6 +96,7 @@ fi
 
 alias edit="chezmoi edit"
 alias cz='chezmoi'
+alias icat="kitty +kitten icat"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
