@@ -17,7 +17,3 @@
 [".oh-my-zsh/custom/themes/powerlevel10k"]
     type = "git-repo"
     url = "https://github.com/romkatv/powerlevel10k.git"
-
-[".config/kitty/themes/tokyonight_night.conf"]
-    type = "file"
-    url = "https://raw.githubusercontent.com/folke/tokyonight.nvim/main/extras/kitty/tokyonight_night.conf"
