@@ -1,24 +1,44 @@
 return {
+    -- THEMES
+    { "catppuccin/nvim",             name = "catppuccin", lazy = true, priority = 1000 },
     { 'nvim-tree/nvim-web-devicons', lazy = true },
-    { "catppuccin/nvim",              name = "catppuccin", lazy = true, priority = 1000 },
     'folke/tokyonight.nvim',
+
+    -- LANGUAGE-SPECIFIC
+    {
+        'nvim-treesitter/nvim-treesitter',
+        build = ':TSUpdate',
+        config = function()
+            require("nvim-treesitter.install").prefer_git = true
+            require('nvim-treesitter.configs').setup {
+                ensure_installed = "all",
+                highlight = { enable = true }
+            }
+        end
+
+    },
+    {
+        'ray-x/go.nvim',
+        main = 'go',
+        config = true
+    },
+    'folke/neodev.nvim',
+
+    -- STATUS LINE
     'nvim-lualine/lualine.nvim',
-    { 'nvim-treesitter/nvim-treesitter',          build = ':TSUpdate' },
+    { 'akinsho/bufferline.nvim', version = 'v3.*' },
+
+    -- LSP
     'neovim/nvim-lspconfig',
+    'jose-elias-alvarez/null-ls.nvim',
     "williamboman/mason.nvim",
     'williamboman/mason-lspconfig.nvim',
-    {
-        'nvim-telescope/telescope.nvim',
-        tag = '0.1.1',
-        dependencies = { 'nvim-lua/plenary.nvim' }
-    },
-    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-    'mfussenegger/nvim-dap',
-    'jose-elias-alvarez/null-ls.nvim',
-    {'phaazon/hop.nvim', config=true},
-    {'j-hui/fidget.nvim', config=true},
-    'folke/neodev.nvim',
     'jay-babu/mason-null-ls.nvim',
+    {
+        'folke/trouble.nvim',
+        main = 'trouble',
+        config = true
+    },
     {
         "glepnir/lspsaga.nvim",
         event = "LspAttach",
@@ -31,15 +51,18 @@ return {
             { "nvim-treesitter/nvim-treesitter" }
         }
     },
-    'folke/trouble.nvim',
-    {
-        'lewis6991/gitsigns.nvim',
-        config = function()
-            require('gitsigns').setup()
-        end
-    },
-    'williamboman/mason-lspconfig.nvim',
+    'onsails/lspkind-nvim',
+    { 'j-hui/fidget.nvim',       config = true },
 
+    -- SEARCH
+    {
+        'nvim-telescope/telescope.nvim',
+        tag = '0.1.1',
+        dependencies = { 'nvim-lua/plenary.nvim' }
+    },
+    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+
+    -- COMPLETION
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-nvim-lsp',
     "hrsh7th/cmp-nvim-lsp-signature-help",
@@ -47,16 +70,24 @@ return {
     'hrsh7th/cmp-cmdline',
     'hrsh7th/nvim-cmp',
     'andersevenrud/cmp-tmux',
-    { 'akinsho/bufferline.nvim', version = 'v3.*' },
-    'onsails/lspkind-nvim',
-    'L3MON4D3/LuaSnip',
     'saadparwaiz1/cmp_luasnip',
+    'L3MON4D3/LuaSnip',
+
+    -- KEYMAP SHORTCUTS
     {
         'numToStr/Comment.nvim',
         config = function() require('Comment').setup() end
     },
     "folke/which-key.nvim",
     "windwp/nvim-autopairs",
-    'ray-x/go.nvim',
+    { 'phaazon/hop.nvim',                         config = true },
+
+    -- MISC
+    'mfussenegger/nvim-dap',
+    {
+        'lewis6991/gitsigns.nvim',
+        main = 'gitsigns',
+        config = true
+    },
     'ray-x/guihua.lua' -- recommanded if need floating window support
 }
