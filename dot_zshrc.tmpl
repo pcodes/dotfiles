@@ -73,13 +73,11 @@ fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Set FZF keybindings (controlled via chezmoi template)
-{{ if eq .chezmoi.osRelease.id "fedora" }}
+{{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "fedora"))}}
 [[ ! -f /usr/share/fzf/shell/key-bindings.zsh ]] || source /usr/share/fzf/shell/key-bindings.zsh
-
-{{ else if eq.osRelease.id "ubuntu" }}
+{{ else if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu"))}}
 [[ ! -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] || source /usr/share/doc/fzf/examples/key-bindings.zsh
 [[ ! -f /usr/share/doc/fzf/examples/completion.zsh ]] || source /usr/share/doc/fzf/examples/completion.zsh
-
 {{ end }}
 
 ### ALIASES ###
