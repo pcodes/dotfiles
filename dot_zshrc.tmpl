@@ -1,0 +1,103 @@
+### ZSH CONFIG OPTIONS ###
+# Everything in this section must be set *before* initializing Oh My ZSH
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Set ZSH settings
+export ZSH="$HOME/.oh-my-zsh"
+export ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
+
+# Set ZSH theme- Powerlevel10k if installed, otherwise fallback to a default
+if [[ -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]]; then
+    ZSH_THEME="powerlevel10k/powerlevel10k"
+else
+    ZSH_THEME="robbyrussell"
+fi
+
+# Custom completions are stored in zsh_completions (e.g. Chezmoi)
+export FPATH="$HOME/.zsh_completions:$FPATH"
+
+export PATH="$HOME/.bin:$PATH"
+
+# Set term to be kitty
+export TERM=xterm-kitty
+
+# OMZ plugin setup
+plugins=(
+    git
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    autoupdate
+    dnf
+    ubuntu
+)
+
+# Source the local zshrc before OMZ in case there are OMZ-specific settings
+source $HOME/.zshrc.local
+
+source $ZSH/oh-my-zsh.sh
+
+### PROGRAM DETECTION ###
+# This section sets vars for various replacement programs like nvim and lsd
+
+if type "nvim" >/dev/null; then
+    HAS_NVIM=true
+fi
+
+if type "lsd" >/dev/null; then
+    HAS_LSD=true
+fi
+
+### OTHER ZSH SETTINGS ###
+
+# Set auto-complete shortcut to ctrl-space
+bindkey '^ ' autosuggest-accept
+
+# Set language explicitly
+export LANG=en_US.UTF-8
+
+
+# If nvim is installed, prefer that to vim
+if [[ -n $HAS_NVIM ]]; then
+    export EDITOR='nvim'
+else
+    export EDITOR='vim'
+fi
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Set FZF keybindings (controlled via chezmoi template)
+{{ if eq .chezmoi.osRelease.id "fedora" }}
+[[ ! -f /usr/share/fzf/shell/key-bindings.zsh ]] || source /usr/share/fzf/shell/key-bindings.zsh
+
+{{ else if eq.osRelease.id "ubuntu" }}
+[[ ! -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] || source /usr/share/doc/fzf/examples/key-bindings.zsh
+[[ ! -f /usr/share/doc/fzf/examples/completion.zsh ]] || source /usr/share/doc/fzf/examples/completion.zsh
+
+{{ end }}
+
+### ALIASES ###
+# Set bash aliases. These will override anything from OMZ plugins
+
+alias edit="chezmoi edit"
+alias cz='chezmoi'
+alias icat="kitty +kitten icat"
+
+if [[ ! -z $HAS_NVIM ]]; then
+    alias vim="nvim"
+fi
+
+if [[ -n $HAS_LSD ]]; then
+    alias ls="lsd"
+    alias l='ls -l'
+    alias la='ls -a'
+    alias lla='ls -la'
+    alias lt='ls --tree'
+fi
+
