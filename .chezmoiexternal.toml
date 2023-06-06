@@ -17,3 +17,7 @@
 [".oh-my-zsh/custom/themes/powerlevel10k"]
     type = "git-repo"
     url = "https://github.com/romkatv/powerlevel10k.git"
+[".config/hypr/themes/catppuccin_machiato.conf"]
+    type="file"
+    url="https://raw.githubusercontent.com/catppuccin/hyprland/main/themes/macchiato.conf"
+    refreshPeriod="168h"
