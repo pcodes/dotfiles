@@ -1,6 +1,44 @@
 return {
     -- THEMES
-    { "catppuccin/nvim",             name = "catppuccin", lazy = true, priority = 1000 },
+    {
+        "catppuccin/nvim",
+        name = "catppuccin",
+        lazy = true,
+        priority = 1000,
+        config = function()
+            require("catppuccin").setup({
+                flavour = "macchiato",
+                integrations = {
+                    cmp = true,
+                    gitsigns = true,
+                    nvimtree = true,
+                    hop = true,
+                    telescope = true,
+                    fidget = true,
+                    lsp_saga = true,
+                    mason = true,
+                    lsp_trouble = true,
+                    which_key = true,
+                    semantic_tokens = true,
+                    native_lsp = {
+                        enabled = true,
+                        virtual_text = {
+                            errors = { "italic" },
+                            hints = { "italic" },
+                            warnings = { "italic" },
+                            information = { "italic" },
+                        },
+                        underlines = {
+                            errors = { "underline" },
+                            hints = { "underline" },
+                            warnings = { "underline" },
+                            information = { "underline" },
+                        },
+                    },
+                }
+            })
+        end
+    },
     { 'nvim-tree/nvim-web-devicons', lazy = true },
     'folke/tokyonight.nvim',
 
@@ -26,7 +64,7 @@ return {
 
     -- STATUS LINE
     'nvim-lualine/lualine.nvim',
-    { 'akinsho/bufferline.nvim', version = 'v3.*' },
+    { 'akinsho/bufferline.nvim',     version = 'v3.*' },
 
     -- LSP
     'neovim/nvim-lspconfig',
@@ -43,7 +81,11 @@ return {
         "glepnir/lspsaga.nvim",
         event = "LspAttach",
         config = function()
-            require("lspsaga").setup({})
+            require("lspsaga").setup({
+                ui = {
+                    kind = require("catppuccin.groups.integrations.lsp_saga").custom_kind(),
+                },
+            })
         end,
         dependencies = {
             { "nvim-tree/nvim-web-devicons" },
@@ -52,7 +94,16 @@ return {
         }
     },
     'onsails/lspkind-nvim',
-    { 'j-hui/fidget.nvim',       config = true },
+    {
+        'j-hui/fidget.nvim',
+        config = function()
+            require('fidget').setup({
+                window = {
+                    blend = 100,
+                },
+            })
+        end
+    },
 
     -- SEARCH
     {

@@ -35,10 +35,19 @@ vim.g.smarttab = 4
 -- Color scheme
 vim.o.termguicolors = true
 
-require('tokyonight').setup({
-    style="storm"
-})
-vim.cmd [[colorscheme tokyonight]]
+-- require("catppuccin").setup({
+--     flavour="macchiato",
+--     integrations = {
+--         cmp = true,
+--         gitsigns = true,
+--         fidget=true,
+--         nvimtree = true,
+--         telescope = true,
+--         notify = false,
+--         mini = false,
+--     }
+-- })
+vim.cmd.colorscheme "catppuccin"
 
 vim.filetype.add({
     pattern= {
