@@ -24,6 +24,7 @@ export FPATH="$HOME/.zsh_completions:$FPATH"
 
 export PATH="$HOME/.bin:$PATH"
 
+
 # Set term to be kitty
 export TERM=xterm-kitty
 
@@ -59,6 +60,15 @@ fi
 # Set auto-complete shortcut to ctrl-space
 bindkey '^ ' autosuggest-accept
 
+# Set FZF keybindings (controlled via chezmoi template)
+{{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "arch"))}}
+[[ ! -f /usr/share/fzf/key-bindings.zsh ]] || source /usr/share/fzf/key-bindings.zsh
+[[ ! -f /usr/share/fzf/completion.zsh ]] || source /usr/share/fzf/completion.zsh
+{{ else if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu"))}}
+[[ ! -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] || source /usr/share/doc/fzf/examples/key-bindings.zsh
+[[ ! -f /usr/share/doc/fzf/examples/completion.zsh ]] || source /usr/share/doc/fzf/examples/completion.zsh
+{{ end }}
+
 # Set language explicitly
 export LANG=en_US.UTF-8
 
@@ -73,13 +83,6 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Set FZF keybindings (controlled via chezmoi template)
-{{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "fedora"))}}
-[[ ! -f /usr/share/fzf/shell/key-bindings.zsh ]] || source /usr/share/fzf/shell/key-bindings.zsh
-{{ else if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu"))}}
-[[ ! -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] || source /usr/share/doc/fzf/examples/key-bindings.zsh
-[[ ! -f /usr/share/doc/fzf/examples/completion.zsh ]] || source /usr/share/doc/fzf/examples/completion.zsh
-{{ end }}
 
 ### ALIASES ###
 # Set bash aliases. These will override anything from OMZ plugins
