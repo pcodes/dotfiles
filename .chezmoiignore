@@ -1,5 +1,42 @@
+##########
+Template Data
+##########
+
+{{- $chassisType := "desktop" }}
+{{- if eq .chezmoi.os "darwin" }}
+{{-   if contains "MacBook" (output "sysctl" "-n" "hw.model") }}
+{{-     $chassisType = "laptop" }}
+{{-   else }}
+{{-     $chassisType = "desktop" }}
+{{-   end }}
+{{- else if eq .chezmoi.os "linux" }}
+{{-   $chassisType = (output "hostnamectl" "--json=short" | mustFromJson).Chassis }}
+{{- else if eq .chezmoi.os "windows" }}
+{{-   $chassisType = (output "powershell.exe" "-NoProfile" "-NonInteractive" "-Command" "if ((Get-CimInstance -Class Win32_Battery | Measure-Object).Count -gt 0) { Write-Output 'laptop' } else { Write-Output 'desktop' }") | trim }}
+{{- end }}
+
+##########
+Common
+##########
+
 README.md
-{{- if ne .chezmoi.hostname "fedora" }}
+
+##########
+Laptop
+##########
+
+# For desktop/servers
+{{ if ne $chassisType "laptop" }}
 .config/i3
 .config/alacritty
-{{- end}}
+.config/hypr
+.config/waybar
+.config/kitty
+
+# For Non-linux laptops (aka my mac)
+{{ else if (and (eq $chassisType "laptop") (ne .chezmoi.os "linux")) }}
+.config/i3
+.config/alacritty
+.config/hypr
+.config/waybar
+{{ end }}
