@@ -1,0 +1,54 @@
+{{- $chassisType := "desktop" }}
+{{- if eq .chezmoi.os "darwin" }}
+{{-   if contains "MacBook" (output "sysctl" "-n" "hw.model") }}
+{{-     $chassisType = "laptop" }}
+{{-   else }}
+{{-     $chassisType = "desktop" }}
+{{-   end }}
+{{- else if eq .chezmoi.os "linux" }}
+{{-   $chassisType = (output "hostnamectl" "--json=short" | mustFromJson).Chassis }}
+{{- else if eq .chezmoi.os "windows" }}
+{{-   $chassisType = (output "powershell.exe" "-NoProfile" "-NonInteractive" "-Command" "if ((Get-CimInstance -Class Win32_Battery | Measure-Object).Count -gt 0) { Write-Output 'laptop' } else { Write-Output 'desktop' }") | trim }}
+{{- end }}
+
+
+[".oh-my-zsh"]
+    type = "git-repo"
+    url = "https://github.com/ohmyzsh/ohmyzsh.git"
+
+[".oh-my-zsh/custom/plugins/zsh-syntax-highlighting"]
+    type = "git-repo"
+    url = "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+
+[".oh-my-zsh/custom/plugins/zsh-autosuggestions"]
+    type = "git-repo"
+    url = "https://github.com/zsh-users/zsh-autosuggestions.git"
+
+[".oh-my-zsh/custom/plugins/autoupdate"]
+    type = "git-repo"
+    url = "https://github.com/tamcore/autoupdate-oh-my-zsh-plugins.git"
+
+[".oh-my-zsh/custom/themes/powerlevel10k"]
+    type = "git-repo"
+    url = "https://github.com/romkatv/powerlevel10k.git"
+
+[".config/bat/themes/catppuccin_machiato.tmTheme"]
+    type="file"
+    url="https://raw.githubusercontent.com/catppuccin/bat/main/Catppuccin-macchiato.tmTheme"
+    refreshPeriod="168h"
+
+
+{{ if (and (eq $chassisType "laptop") (eq .chezmoi.os "linux")) }}
+[".config/hypr/themes/catppuccin_machiato.conf"]
+    type="file"
+    url="https://raw.githubusercontent.com/catppuccin/hyprland/main/themes/macchiato.conf"
+    refreshPeriod="168h"
+{{ end }}
+
+{{ if eq $chassisType "laptop" }}
+[".config/kitty/themes/catppuccin_machiato.conf"]
+    type="file"
+    url="https://raw.githubusercontent.com/catppuccin/kitty/main/themes/macchiato.conf"
+    refreshPeriod="168h"
+{{end}}
+
