@@ -19,6 +19,9 @@ require('lazy').setup(
         checker = {
             enabled = true,
             notify = false
+        },
+        dev={
+            path="~/Code/nvim_plugins"
         }
     }
 )
