@@ -1,4 +1,9 @@
-font_size 18.0
+{{ if eq .chezmoi.os "darwin"}}
+font_size=18.0
+{{else}}
+font_size=12
+{{end}}
+
 font_family FiraCode Nerd Font
 enabled_layouts Horizontal
 
