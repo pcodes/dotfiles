@@ -96,7 +96,7 @@ return {
     'onsails/lspkind-nvim',
     {
         'j-hui/fidget.nvim',
-        tag='legacy',
+        tag = 'legacy',
         config = function()
             require('fidget').setup({
                 window = {
@@ -152,4 +152,5 @@ return {
             })
         end
     },
+    { 'nvim-tree/nvim-tree.lua', main = 'nvim-tree', config = true },
 }
