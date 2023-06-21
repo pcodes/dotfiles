@@ -36,6 +36,7 @@ plugins=(
     autoupdate
     dnf
     archlinux
+    docker
 )
 
 # Source the local zshrc before OMZ in case there are OMZ-specific settings
@@ -52,6 +53,10 @@ fi
 
 if type "lsd" >/dev/null; then
     HAS_LSD=true
+fi
+
+if type "op" >/dev/null; then
+    HAS_OP=true
 fi
 
 ### OTHER ZSH SETTINGS ###
@@ -77,6 +82,11 @@ if [[ -n $HAS_NVIM ]]; then
     export EDITOR='nvim'
 else
     export EDITOR='vim'
+fi
+
+# If 1password CLI is installed, add completions
+if [[ -n $HAS_NVIM ]]; then
+    eval "$(op completion zsh)"; compdef _op op
 fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
