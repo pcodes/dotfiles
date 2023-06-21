@@ -37,7 +37,6 @@ vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {pattern="*/waybar/config
 -- Import all of the submodules
 require('settings')
 require("statusline")
-require('languages')
 require("autocomplete")
 require('lsp')
 require('telescope')
