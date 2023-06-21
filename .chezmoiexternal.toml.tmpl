@@ -32,10 +32,12 @@
     type = "git-repo"
     url = "https://github.com/romkatv/powerlevel10k.git"
 
+{{ if eq $chassisType "laptop" }}
 [".config/bat/themes/catppuccin_machiato.tmTheme"]
     type="file"
     url="https://raw.githubusercontent.com/catppuccin/bat/main/Catppuccin-macchiato.tmTheme"
     refreshPeriod="168h"
+{{end}}
 
 
 {{ if (and (eq $chassisType "laptop") (eq .chezmoi.os "linux")) }}
