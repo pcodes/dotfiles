@@ -68,3 +68,6 @@ keymap('n', 'gt', "<cmd>Lspsaga goto_type_definition<CR>", { desc = 'Go to type 
 -- keymap('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
 -- keymap('n', 'gr', vim.lsp.buf.references, bufopts)
 keymap('n', '<leader>F', function() vim.lsp.buf.format { async = true } end, { desc = 'Format file' })
+
+-- ---Nvim Tree bindings---
+keymap('n', '<leader>t', '<cmd>NvimTreeToggle<cr>', { desc = 'NvimTree toggle' })
