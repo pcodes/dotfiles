@@ -17,8 +17,8 @@ keymap("n", "<Down>", "<C-w><C-j>", { desc = 'Move cursor down window' })
 keymap("n", "<Left>", "<C-w><C-h>", { desc = 'Move cursor left window' })
 keymap("n", "<Right>", "<C-w><C-l>", { desc = 'Move cursor right window' })
 
--- ---Hop bindings---
-keymap("n", "<leader>h", ":HopWord<cr>")
+-- -- ---Hop bindings---
+-- keymap("n", "<leader>h", ":HopWord<cr>")
 
 -- ---Telescope bindings---
 register_prefix("<leader>f", "+telescope")
