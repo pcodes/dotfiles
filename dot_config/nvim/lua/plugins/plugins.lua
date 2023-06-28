@@ -12,7 +12,7 @@ return {
 					cmp = true,
 					gitsigns = true,
 					nvimtree = true,
-					hop = true,
+					leap = true,
 					telescope = true,
 					fidget = true,
 					lsp_saga = true,
