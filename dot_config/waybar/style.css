@@ -1,0 +1,90 @@
+@import "catppuccin_macchiato.css";
+
+* {
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: 'FiraCode Nerd Font';
+    font-size: 13px;
+    border: none;
+    color: @text
+}
+
+#workspaces {
+    border-radius: 10px;
+    background-color: @surface0;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+#clock {
+    border-radius: 10px;
+    background-color: @surface0;
+    margin-top: 5px;
+    padding: 0 10 0;
+}
+
+window#waybar {
+    /* background-color: rgba(43, 48, 59, 0.5); */
+    /* border-bottom: 3px solid rgba(100, 114, 125, 0.5); */
+    /* color: #ffffff; */
+    /* transition-property: background-color; */
+    /* transition-duration: .5s; */
+    background: transparent;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+window#waybar.termite {
+    background-color: #3F3F3F;
+}
+
+window#waybar.chromium {
+    background-color: #000000;
+    border: none;
+}
+
+button {
+    /* Use box-shadow instead of border so the text isn't offset */
+    box-shadow: inset 0 -3px transparent;
+    /* Avoid rounded borders under each button name */
+    border: none;
+    border-radius: 0;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+button:hover {
+    background: inherit;
+    box-shadow: inset 0 -3px @text;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    background-color: transparent;
+    color: @text;
+}
+
+#workspaces button:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#workspaces button.focused {
+    background-color: #64727D;
+    box-shadow: inset 0 -3px @text;
+}
+
+#workspaces button.urgent {
+    background-color: #eb4d4b;
+}
+
+#battery,
+#backlight,
+#tray {
+    padding: 5 10 5px;
+    color: @text;
+    border-radius: 10px;
+    background-color: @surface0;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
