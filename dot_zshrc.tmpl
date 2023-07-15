@@ -69,9 +69,9 @@ fi
 bindkey '^ ' autosuggest-accept
 
 # Set FZF keybindings (controlled via chezmoi template)
-{{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "ubuntu"))}}
-[[ ! -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] || source /usr/share/doc/fzf/examples/key-bindings.zsh
-[[ ! -f /usr/share/doc/fzf/examples/completion.zsh ]] || source /usr/share/doc/fzf/examples/completion.zsh
+{{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "fedora"))}}
+[[ ! -f /usr/share/fzf/shell/key-bindings.zsh ]] || source /usr/share/fzf/shell/key-bindings.zsh
+[[ ! -f /usr/share/fzf/shell/completion.zsh ]] || source /usr/share/fzf/shell/completion.zsh
 {{ else }}
 [[ ! -f /usr/share/fzf/key-bindings.zsh ]] || source /usr/share/fzf/key-bindings.zsh
 [[ ! -f /usr/share/fzf/completion.zsh ]] || source /usr/share/fzf/completion.zsh
