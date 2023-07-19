@@ -29,6 +29,7 @@ keymap("n", "<leader>fb", ":Telescope buffers<cr>")
 register_prefix("<leader>b", "+buffer")
 keymap("n", "bn", ":BufferLineCycleNext<cr>")
 keymap("n", "bp", ":BufferLineCyclePrev<cr>")
+keymap("n", "bx", ":bdelete<cr>")
 
 -- ---Trouble bindings---
 register_prefix("<leader>x", "+trouble")
@@ -45,6 +46,9 @@ keymap("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>",
     { silent = true, noremap = true }
 )
 keymap("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
+    { silent = true, noremap = true }
+)
+keymap("n", "<leader>xt", "<cmd>TodoTrouble<cr>",
     { silent = true, noremap = true }
 )
 
