@@ -7,15 +7,15 @@ M.capabilities = capabilities
 require("neodev").setup({
 })
 
+local local_lsp_settings = require('lsp.local')
+
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed = {
-        'lua_ls', 'jsonls', 'yamlls', 'bashls'
-    }
+    ensure_installed = local_lsp_settings.required_ls
 })
 
 require("mason-null-ls").setup({
-    ensure_installed = { "stylua", 'luacheck', 'shellcheck', 'shfmt', 'prettier' },
+    ensure_installed = local_lsp_settings.required_linters,
     automatic_setup = true
 })
 
