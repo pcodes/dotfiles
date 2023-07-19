@@ -22,7 +22,10 @@ require('lazy').setup(
         },
         dev={
             path="~/Code/nvim_plugins"
-        }
+        },
+	install={
+		colorscheme={'catppuccin'}
+	}
     }
 )
 
