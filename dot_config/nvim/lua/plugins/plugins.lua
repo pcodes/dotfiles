@@ -57,13 +57,14 @@ return {
             }
         end
 
-    },
-    {
-        'ray-x/go.nvim',
-        main = 'go',
-        config = true
-    },
-    'folke/neodev.nvim',
+	},
+	{
+		'ray-x/go.nvim',
+		main = 'go',
+		config = true
+	},
+	'folke/neodev.nvim',
+    'folke/neoconf.nvim',
 
     -- STATUS LINE
     'nvim-lualine/lualine.nvim',
