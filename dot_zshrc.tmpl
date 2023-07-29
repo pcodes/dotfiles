@@ -44,6 +44,10 @@ source $HOME/.zshrc.local
 
 source $ZSH/oh-my-zsh.sh
 
+chezmoi-cd() {
+    cd $(chezmoi source-path)
+}
+
 ### PROGRAM DETECTION ###
 # This section sets vars for various replacement programs like nvim and lsd
 
@@ -102,6 +106,7 @@ fi
 
 alias edit="chezmoi edit"
 alias cz='chezmoi'
+alias czcd='chezmoi-cd'
 alias icat="kitty +kitten icat"
 
 if [[ ! -z $HAS_NVIM ]]; then
