@@ -27,7 +27,15 @@ return {
         'numToStr/Comment.nvim',
         config = function() require('Comment').setup() end
     },
-    "windwp/nvim-autopairs",
+    {
+        'windwp/nvim-autopairs',
+        config = function(_, opts)
+            require('nvim-autopairs').setup(opts)
+
+            require('cmp').event:on('confirm_done',
+                require('nvim-autopairs.completion.cmp').on_confirm_done())
+        end
+    },
     {
         "ggandor/leap.nvim",
         dependencies = { "tpope/vim-repeat" },
@@ -40,5 +48,5 @@ return {
         dependencies = { "nvim-lua/plenary.nvim" },
         config = true
     },
-    { 'nvim-tree/nvim-tree.lua',                  main = 'nvim-tree', config = true },
+    { 'nvim-tree/nvim-tree.lua', main = 'nvim-tree', config = true },
 }
