@@ -22,15 +22,15 @@ vim.o.updatetime = 250
 vim.wo.signcolumn = 'yes'
 
 -- Remap space as leader key
-vim.api.nvim_set_keymap('', '<Space>', '<Nop>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent = true })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 vim.bo.tabstop = 4
-vim.bo.softtabstop = 4
+vim.bo.softtabstop = 0
 vim.bo.expandtab = true
 vim.bo.shiftwidth = 4
-vim.g.smarttab = 4
+vim.g.smarttab = true
 
 -- Color scheme
 vim.o.termguicolors = true
@@ -50,8 +50,7 @@ vim.o.termguicolors = true
 vim.cmd.colorscheme "catppuccin"
 
 vim.filetype.add({
-    pattern= {
+    pattern = {
         ['.*zshrc'] = 'zsh'
     }
 })
-
