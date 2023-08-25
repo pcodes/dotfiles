@@ -38,10 +38,11 @@ vim.api.nvim_create_autocmd({"BufWritePost"}, {
 vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {pattern="*/waybar/config", command="set filetype=json"})
 
 -- Import all of the submodules
-require('settings')
-require("statusline")
-require("autocomplete")
-require('lsp')
-require('telescope')
-require('keybindings')
-require('local')
+-- require('settings')
+-- require("statusline")
+-- require("autocomplete")
+-- require('lsp')
+-- require('telescope')
+-- require('keybindings')
+-- require('local')
+require('config')
