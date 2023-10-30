@@ -1,10 +1,12 @@
 {{ if eq .chezmoi.os "darwin"}}
 font_size 18.0
+macos_show_window_title_in none
 {{else}}
 font_size 12
 {{end}}
 
+tab_bar_style powerline
 font_family FiraCode Nerd Font
 enabled_layouts Horizontal
 
-include themes/catppuccin_macchiato.conf
+include themes/tokyo_night_moon.conf

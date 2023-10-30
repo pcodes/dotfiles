@@ -32,12 +32,15 @@
     type = "git-repo"
     url = "https://github.com/romkatv/powerlevel10k.git"
 
-{{ if eq $chassisType "laptop" }}
+[".config/bat/themes/tokyo_night_moon.tmTheme"]
+  type="file"
+  url="https://raw.githubusercontent.com/folke/tokyonight.nvim/main/extras/sublime/tokyonight_moon.tmTheme"
+  refreshPeriod="168h"
+
 [".config/bat/themes/catppuccin_macchiato.tmTheme"]
     type="file"
     url="https://raw.githubusercontent.com/catppuccin/bat/main/Catppuccin-macchiato.tmTheme"
     refreshPeriod="168h"
-{{end}}
 
 
 {{ if (and (eq $chassisType "laptop") (eq .chezmoi.os "linux")) }}
@@ -51,10 +54,13 @@
     refreshPeriod="168h"
 {{ end }}
 
-{{ if eq $chassisType "laptop" }}
+[".config/kitty/themes/tokyo_night_moon.conf"]
+  type="file"
+  url="https://raw.githubusercontent.com/folke/tokyonight.nvim/main/extras/kitty/tokyonight_moon.conf"
+  refreshPeriod="168h"
+
 [".config/kitty/themes/catppuccin_macchiato.conf"]
     type="file"
     url="https://raw.githubusercontent.com/catppuccin/kitty/main/themes/macchiato.conf"
     refreshPeriod="168h"
-{{end}}
 
