@@ -48,6 +48,10 @@ chezmoi-cd() {
     cd $(chezmoi source-path)
 }
 
+### LANGUAGE SETTINGS ###
+# For any language config options (like GOPATH, cargo env, etc)
+export GOPATH=$HOME/.go
+
 ### PROGRAM DETECTION ###
 # This section sets vars for various replacement programs like nvim and lsd
 
@@ -72,18 +76,8 @@ fi
 # Set auto-complete shortcut to ctrl-space
 bindkey '^ ' autosuggest-accept
 
-# Set FZF keybindings (controlled via chezmoi template)
-{{ if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "fedora"))}}
-[[ ! -f /usr/share/fzf/shell/key-bindings.zsh ]] || source /usr/share/fzf/shell/key-bindings.zsh
-[[ ! -f /usr/share/fzf/shell/completion.zsh ]] || source /usr/share/fzf/shell/completion.zsh
-{{ else }}
-[[ ! -f /usr/share/fzf/key-bindings.zsh ]] || source /usr/share/fzf/key-bindings.zsh
-[[ ! -f /usr/share/fzf/completion.zsh ]] || source /usr/share/fzf/completion.zsh
-{{ end }}
-
 # Set language explicitly
 export LANG=en_US.UTF-8
-
 
 # If nvim is installed, prefer that to vim
 if [[ -n $HAS_NVIM ]]; then
@@ -100,6 +94,7 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 ### ALIASES ###
 # Set bash aliases. These will override anything from OMZ plugins
