@@ -1,0 +1,13 @@
+import = ["/Users/patcody/.config/alacritty/themes/tokyo_night_moon.toml"]
+
+[cursor.style]
+shape = "Beam"
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 20
+
+[font.normal]
+family = "FiraCode Nerd Font"
