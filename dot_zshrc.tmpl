@@ -19,9 +19,6 @@ else
     ZSH_THEME="robbyrussell"
 fi
 
-# Custom completions are stored in zsh_completions (e.g. Chezmoi)
-export FPATH="$HOME/.zsh_completions:$FPATH"
-
 export PATH="$HOME/.bin:$PATH"
 
 
@@ -108,7 +105,7 @@ if [[ ! -z $HAS_NVIM ]]; then
     alias vim="nvim"
 fi
 
-if [[ ! -z $HAS_NVIM ]]; then
+if [[ ! -z $HAS_BAT ]]; then
     alias cat="bat"
 fi
 
