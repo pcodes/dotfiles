@@ -22,9 +22,6 @@ fi
 export PATH="$HOME/.bin:$PATH"
 
 
-# Set term to be kitty
-export TERM=xterm-256color
-
 # OMZ plugin setup
 plugins=(
     git
@@ -99,7 +96,6 @@ fi
 alias edit="chezmoi edit"
 alias cz='chezmoi'
 alias czcd='chezmoi-cd'
-alias icat="kitty +kitten icat"
 
 if [[ ! -z $HAS_NVIM ]]; then
     alias vim="nvim"

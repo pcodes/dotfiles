@@ -29,7 +29,6 @@ Chezmoi uses special prefixes in the source directory:
 ### Template System
 Files ending in `.tmpl` are processed with Go templates. Key template variables:
 - `.chezmoi.os` - Operating system (darwin, linux, windows)
-- Chassis detection logic in `.chezmoiignore` determines laptop vs desktop
 
 ### Local Customization Pattern
 Several configs use a "local" file pattern for machine-specific settings that shouldn't be committed:
@@ -43,10 +42,10 @@ The `create_` prefix ensures these files are created once but never overwritten.
 `.chezmoiexternal.toml.tmpl` defines git repos and files fetched automatically:
 - Oh My ZSH and plugins (zsh-syntax-highlighting, zsh-autosuggestions, autoupdate)
 - Powerlevel10k theme
-- Tokyo Night theme files for bat and kitty
+- Tokyo Night theme file for bat
 
 ### Conditional Ignore
-`.chezmoiignore` uses chassis detection to skip configs irrelevant to the current machine type (e.g., i3/hypr/waybar only on Linux laptops).
+`.chezmoiignore` excludes repo docs (`README.md`, `CLAUDE.md`) from being applied to `$HOME`.
 
 ## Linters/Formatters
 
