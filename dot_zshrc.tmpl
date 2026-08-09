@@ -19,8 +19,9 @@ else
     ZSH_THEME="robbyrussell"
 fi
 
-export PATH="$HOME/.bin:$PATH"
-
+# PATH, EDITOR, LANG and GOPATH live in ~/.zshenv, which every zsh reads --
+# .zshrc is skipped entirely by scripts, cron and ssh commands. The ordering is
+# then repaired in ~/.zprofile, because macOS's path_helper demotes it.
 
 # OMZ plugin setup
 plugins=(
@@ -34,17 +35,13 @@ plugins=(
 )
 
 # Source the local zshrc before OMZ in case there are OMZ-specific settings
-source $HOME/.zshrc.local
+[[ -f $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
 
 source $ZSH/oh-my-zsh.sh
 
 chezmoi-cd() {
     cd $(chezmoi source-path)
 }
-
-### LANGUAGE SETTINGS ###
-# For any language config options (like GOPATH, cargo env, etc)
-export GOPATH=$HOME/.go
 
 ### PROGRAM DETECTION ###
 # This section sets vars for various replacement programs like nvim and lsd
@@ -70,16 +67,6 @@ fi
 # Set auto-complete shortcut to ctrl-space
 bindkey '^ ' autosuggest-accept
 
-# Set language explicitly
-export LANG=en_US.UTF-8
-
-# If nvim is installed, prefer that to vim
-if [[ -n $HAS_NVIM ]]; then
-    export EDITOR='nvim'
-else
-    export EDITOR='vim'
-fi
-
 # If 1password CLI is installed, add completions
 if [[ -n $HAS_OP ]]; then
     eval "$(op completion zsh)"; compdef _op op
@@ -88,7 +75,8 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Set up fzf key bindings and fuzzy completion
+(( $+commands[fzf] )) && source <(fzf --zsh)
 
 ### ALIASES ###
 # Set bash aliases. These will override anything from OMZ plugins

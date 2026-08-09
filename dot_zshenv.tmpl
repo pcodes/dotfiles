@@ -1,0 +1,68 @@
+# ~/.zshenv -- sourced by EVERY zsh, with no exceptions: scripts, `ssh host cmd`,
+# cron jobs, git hooks, and any editor or agent that spawns a shell. None of
+# those read .zshrc, so anything a non-interactive context needs lives here.
+#
+# Keep this file fast and silent. No output, no prompts, no compinit, no
+# completions -- those belong in .zshrc.
+
+# Keep path entries unique. Nested shells re-source this file{{ if eq .chezmoi.os "darwin" }}, and it makes
+# the re-prepend in .zprofile a move rather than a duplicate{{ end }}.
+typeset -U path fpath
+
+{{ if eq .chezmoi.os "darwin" -}}
+# Homebrew. This MUST come before the personal paths below: `brew shellenv`
+# internally runs path_helper, which rebuilds PATH system-directories-first and
+# would demote anything already prepended. Guarded on HOMEBREW_PREFIX so nested
+# shells inherit the exported result instead of re-running the subprocess.
+if [[ -z $HOMEBREW_PREFIX && -x /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+{{ end -}}
+### TOOLCHAINS ###
+
+export GOPATH="$HOME/.go"
+
+# Guarded -- this file only exists on machines where rustup has been run.
+[[ -f $HOME/.cargo/env ]] && . "$HOME/.cargo/env"
+
+### PATH ###
+# Every directory that must outrank the system ones, highest priority first.
+{{ if eq .chezmoi.os "darwin" -}}
+# Kept in a named array so ~/.zprofile can re-prepend the identical list after
+# macOS's /etc/zprofile runs path_helper and demotes it. See ~/.zprofile.
+#
+# The Homebrew directories are listed explicitly even though `brew shellenv`
+# already added them, because path_helper demotes those too -- without them here
+# a login shell resolves python3 to Apple's 3.9 instead of Homebrew's.
+{{ end -}}
+typeset -Ua my_path
+my_path=(
+    $HOME/.bin
+    $HOME/Code/scripts
+    $GOPATH/bin
+    $HOME/.local/share/nvim/mason/bin  # LSPs, linters and formatters from Mason
+{{- if eq .chezmoi.os "darwin" }}
+    $HOMEBREW_PREFIX/opt/rustup/bin
+    $HOMEBREW_PREFIX/bin
+    $HOMEBREW_PREFIX/sbin
+{{- end }}
+)
+path=($my_path $path)
+
+# Backstop for a shell launched with no PATH at all. `typeset -U` keeps the
+# first occurrence, so these are appended only when genuinely absent.
+path+=(/usr/bin /bin /usr/sbin /sbin)
+
+### ENVIRONMENT ###
+
+# EDITOR belongs here rather than .zshrc, because `git commit`, `crontab -e` and
+# anything else that shells out to $EDITOR is often non-interactive.
+if (( $+commands[nvim] )); then
+    export EDITOR=nvim
+else
+    export EDITOR=vim
+fi
+export VISUAL=$EDITOR
+
+export LANG=en_US.UTF-8

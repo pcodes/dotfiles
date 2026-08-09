@@ -1,2 +1,8 @@
 README.md
 CLAUDE.md
+
+# .zprofile exists only to repair the PATH ordering that macOS's path_helper
+# undoes. No other platform runs path_helper, so nothing to repair there.
+{{ if ne .chezmoi.os "darwin" }}
+.zprofile
+{{ end }}

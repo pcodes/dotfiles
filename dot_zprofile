@@ -1,0 +1,14 @@
+# ~/.zprofile -- login shells only, sourced AFTER /etc/zprofile and BEFORE .zshrc.
+#
+# This file exists to undo one specific thing macOS does. /etc/zprofile runs
+# path_helper, which rebuilds PATH with the system directories first and appends
+# everything else to the end. That silently demotes the entries .zshenv put at
+# the front: in a login shell ~/.bin lands *below* /usr/bin and /opt/homebrew/bin,
+# so a script there can never shadow a system or Homebrew command -- which is the
+# entire reason the directory exists.
+#
+# Re-prepending the same array restores the intended order. `typeset -U path`
+# from .zshenv makes this a move rather than a duplicate.
+#
+# macOS only; chezmoi skips this file on other platforms (see .chezmoiignore).
+path=($my_path $path)
