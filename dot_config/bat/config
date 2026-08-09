@@ -3,8 +3,13 @@
 # run `bat --help` to get a list of all possible configuration options.
 
 # Specify desired highlighting theme (e.g. "TwoDark"). Run `bat --list-themes`
-# for a list of all available themes
---theme="Catppuccin Mocha"
+# for a list of all available themes.
+#
+# tokyo_night_moon is not built in -- it is the theme fetched into themes/ by
+# .chezmoiexternal.toml, and only becomes selectable once `bat cache --build`
+# has registered it. run_onchange_after_build-bat-cache.sh handles that. bat
+# names such themes after the file, not the <name> inside it.
+--theme="tokyo_night_moon"
 
 # Enable this to use italic text on the terminal. This is not supported on all
 # terminal emulators (like tmux, by default):

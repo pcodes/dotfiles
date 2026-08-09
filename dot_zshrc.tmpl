@@ -23,15 +23,25 @@ fi
 # .zshrc is skipped entirely by scripts, cron and ssh commands. The ordering is
 # then repaired in ~/.zprofile, because macOS's path_helper demotes it.
 
-# OMZ plugin setup
+# OMZ plugin setup. The package-manager and docker plugins are gated on the
+# platform they apply to -- each one adds completions and aliases for a tool that
+# isn't present elsewhere.
 plugins=(
     git
     zsh-autosuggestions
     zsh-syntax-highlighting
     autoupdate
-    dnf
-    archlinux
+{{- if eq .chezmoi.os "linux" }}
+{{-   $id := dig "id" "" .chezmoi.osRelease }}
+{{-   $like := dig "idLike" "" .chezmoi.osRelease }}
     docker
+{{-   if or (eq $id "arch") (contains "arch" $like) }}
+    archlinux
+{{-   end }}
+{{-   if or (has $id (list "fedora" "rhel" "centos" "rocky" "almalinux")) (contains "fedora" $like) (contains "rhel" $like) }}
+    dnf
+{{-   end }}
+{{- end }}
 )
 
 # Source the local zshrc before OMZ in case there are OMZ-specific settings

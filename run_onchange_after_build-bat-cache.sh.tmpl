@@ -1,0 +1,12 @@
+#!/bin/sh
+# bat only discovers themes in ~/.config/bat/themes after its cache is rebuilt,
+# so the theme fetched by .chezmoiexternal.toml is unusable until this runs.
+#
+# Re-runs whenever the requested theme changes, via the config hash below:
+# {{ include "dot_config/bat/config" | sha256sum }}
+
+set -eu
+
+command -v bat >/dev/null || exit 0
+
+bat cache --build
