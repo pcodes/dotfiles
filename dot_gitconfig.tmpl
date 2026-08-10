@@ -1,9 +1,49 @@
 [user]
 	name = Pat Cody
 	email = pat@patcody.io
-{{ if eq .chezmoi.os "darwin"}}
+
+[init]
+	defaultBranch = main
+
+[push]
+	# Create the upstream branch on first push, instead of failing with a
+	# suggested --set-upstream command to copy back in.
+	autoSetupRemote = true
+
+[pull]
+	# Refuse to pull a diverged branch rather than inventing a merge commit for
+	# it. Divergence then has to be resolved deliberately, with --rebase or
+	# --merge.
+	ff = only
+
+[rerere]
+	# Record conflict resolutions and replay them when the same conflict comes
+	# back, which it does on every retried rebase.
+	enabled = true
+
+[diff]
+	# Hunks that read better than the default Myers algorithm gives, especially
+	# where a block of code has moved.
+	algorithm = histogram
+
+[branch]
+	# `git branch` most-recent-first; the alphabetical default buries whatever
+	# was worked on today.
+	sort = -committerdate
+
+[column]
+	ui = auto
+{{- with lookPath "gh" }}
+
+# gh keeps the GitHub token in the system keychain; this hands it to git so HTTPS
+# pushes work without a PAT sitting in a config file.
+#
+# The path is absolute because git runs a `!` credential helper through /bin/sh,
+# whose PATH is whatever the calling process had -- a GUI editor or a launchd job
+# does not necessarily have Homebrew's bin on it. Resolved at `chezmoi apply`
+# time so this works on Apple silicon, Intel and Linux alike.
 [credential "https://github.com"]
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper = !{{ . }} auth git-credential
 [credential "https://gist.github.com"]
-	helper = !/opt/homebrew/bin/gh auth git-credential
-{{end}}
+	helper = !{{ . }} auth git-credential
+{{- end }}
