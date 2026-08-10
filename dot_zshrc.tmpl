@@ -26,10 +26,12 @@ fi
 # OMZ plugin setup. The package-manager and docker plugins are gated on the
 # platform they apply to -- each one adds completions and aliases for a tool that
 # isn't present elsewhere.
+#
+# zsh-syntax-highlighting is deliberately not in this list; it is sourced at the
+# bottom of this file instead, where its load order is guaranteed.
 plugins=(
     git
     zsh-autosuggestions
-    zsh-syntax-highlighting
     autoupdate
 {{- if eq .chezmoi.os "linux" }}
 {{-   $id := dig "id" "" .chezmoi.osRelease }}
@@ -53,32 +55,18 @@ chezmoi-cd() {
     cd $(chezmoi source-path)
 }
 
-### PROGRAM DETECTION ###
-# This section sets vars for various replacement programs like nvim and lsd
-
-if type "nvim" >/dev/null; then
-    HAS_NVIM=true
-fi
-
-if type "lsd" >/dev/null; then
-    HAS_LSD=true
-fi
-
-if type "bat" >/dev/null; then
-    HAS_BAT=true
-fi
-
-if type "op" >/dev/null; then
-    HAS_OP=true
-fi
-
 ### OTHER ZSH SETTINGS ###
+# Optional tools are guarded with `(( $+commands[x] ))` throughout this file.
+# $commands is zsh's PATH lookup table, so the test means "this binary is
+# installed" and nothing else. `type` and `command -v` also match shell
+# functions and aliases -- including the aliases below, so `type cat` succeeds
+# whether or not bat exists -- which makes them useless for this.
 
 # Set auto-complete shortcut to ctrl-space
 bindkey '^ ' autosuggest-accept
 
 # If 1password CLI is installed, add completions
-if [[ -n $HAS_OP ]]; then
+if (( $+commands[op] )); then
     eval "$(op completion zsh)"; compdef _op op
 fi
 
@@ -95,19 +83,29 @@ alias edit="chezmoi edit"
 alias cz='chezmoi'
 alias czcd='chezmoi-cd'
 
-if [[ ! -z $HAS_NVIM ]]; then
-    alias vim="nvim"
-fi
+(( $+commands[nvim] )) && alias vim="nvim"
+(( $+commands[bat] ))  && alias cat="bat"
 
-if [[ ! -z $HAS_BAT ]]; then
-    alias cat="bat"
-fi
-
-if [[ -n $HAS_LSD ]]; then
+if (( $+commands[lsd] )); then
     alias ls="lsd"
     alias l='ls -l'
     alias la='ls -a'
     alias lla='ls -la'
     alias lt='ls --tree'
 fi
+
+### SYNTAX HIGHLIGHTING ###
+# Keep this last, and after the fzf setup above.
+#
+# On zsh 5.9+ this is belt and braces: z-sy-h hooks zle-line-pre-redraw via
+# add-zle-hook-widget, which fires on every redraw no matter what loaded when.
+# Below 5.9, or wherever add-zle-hook-widget is missing, it falls back to
+# wrapping each widget individually at source time -- and then it only wraps
+# what already exists, leaving anything bound later (fzf's ctrl-r and ctrl-t,
+# widgets from OMZ plugins) unhighlighted. Sourcing last is correct on both
+# paths, so this file does not need to care which one a given machine takes.
+
+zsh_syntax_highlighting=$ZSH_CUSTOM/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[[ -f $zsh_syntax_highlighting ]] && source $zsh_syntax_highlighting
+unset zsh_syntax_highlighting
 
