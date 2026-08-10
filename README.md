@@ -29,12 +29,17 @@ off macOS.
 Oh My Zsh plugins are selected per platform in `dot_zshrc.tmpl` — `docker`,
 `archlinux` and `dnf` only load on the systems that actually have those tools.
 
-Plugins and the theme are fetched by chezmoi as externals rather than vendored:
+Plugins and the theme are fetched by chezmoi as externals rather than vendored,
+each cloned at depth 1:
 
 - zsh-autosuggestions
 - zsh-syntax-highlighting
 - autoupdate
 - Powerlevel10k
+
+`zsh-syntax-highlighting` is sourced from the bottom of `zshrc` rather than
+listed in `plugins`, so that it loads after everything else that binds a ZLE
+widget. The Powerlevel10k prompt itself is in `dot_p10k.zsh`.
 
 ## Terminal
 
@@ -53,8 +58,8 @@ customizations on top of it.
 
 Themed with Tokyo Night Moon, fetched as an external. `bat` only discovers
 themes in its config directory after a cache rebuild, so
-`run_onchange_after_build-bat-cache.sh` runs `bat cache --build` whenever the
-requested theme changes.
+`.chezmoiscripts/run_onchange_after_build-bat-cache.sh` runs `bat cache --build`
+whenever the requested theme changes.
 
 ## Machine-local overrides
 

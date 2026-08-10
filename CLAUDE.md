@@ -29,10 +29,11 @@ Chezmoi uses special prefixes in the source directory:
 ### Template System
 Files ending in `.tmpl` are processed with Go templates. Key template variables:
 - `.chezmoi.os` - Operating system (darwin, linux, windows)
-- `.chezmoi.osRelease` - Linux distro info (`id`, `idLike`); absent on macOS.
+- `.chezmoi.osRelease` - Linux distro info (`id`, `idLike`). On macOS the key
+  exists but holds an empty map, so it is falsy rather than missing.
   Read it with `dig "id" "" .chezmoi.osRelease` — chezmoi runs templates with
   `missingkey=error`, so a plain `.chezmoi.osRelease.idLike` fails hard on any
-  distro that omits `ID_LIKE`.
+  distro that omits `ID_LIKE`. `dig` covers both that and the empty macOS map.
 
 ### Shell Config Layout
 Split by which shells zsh sources each file for:
@@ -58,8 +59,13 @@ The `create_` prefix ensures these files are created once but never overwritten.
 - Tokyo Night theme file for bat
 
 Every entry sets `refreshPeriod`; without it chezmoi re-fetches on every apply.
+Every `git-repo` entry clones at depth 1 and pulls `--ff-only`, which keeps it
+shallow.
 
 ### Scripts
+Scripts live in `.chezmoiscripts/`, which runs them without also registering a
+target path under `$HOME`.
+
 `run_onchange_after_build-bat-cache.sh.tmpl` runs `bat cache --build`, which is
 what makes the externally-fetched theme selectable. It re-runs when the hash of
 `dot_config/bat/config` embedded in it changes.
