@@ -3,33 +3,49 @@
 #
 # refreshPeriod bounds how often chezmoi re-fetches them. Without it every
 # `chezmoi apply` does a network pull for each entry below.
+#
+# Every repo is cloned at depth 1. None of this history is ever read -- these are
+# vendored runtime dependencies, not things to bisect -- and at full depth the
+# two big ones alone cost 87MB of .git. Both Oh My Zsh's and Powerlevel10k's own
+# install instructions clone shallow, and their updaters expect it. `--ff-only`
+# on the pull keeps a shallow repo from being quietly deepened by a merge.
 
 [".oh-my-zsh"]
     type = "git-repo"
     url = "https://github.com/ohmyzsh/ohmyzsh.git"
     refreshPeriod = "168h"
+    clone.args = ["--depth=1"]
+    pull.args = ["--ff-only"]
 
 [".oh-my-zsh/custom/plugins/zsh-syntax-highlighting"]
     type = "git-repo"
     url = "https://github.com/zsh-users/zsh-syntax-highlighting.git"
     refreshPeriod = "168h"
+    clone.args = ["--depth=1"]
+    pull.args = ["--ff-only"]
 
 [".oh-my-zsh/custom/plugins/zsh-autosuggestions"]
     type = "git-repo"
     url = "https://github.com/zsh-users/zsh-autosuggestions.git"
     refreshPeriod = "168h"
+    clone.args = ["--depth=1"]
+    pull.args = ["--ff-only"]
 
 [".oh-my-zsh/custom/plugins/autoupdate"]
     type = "git-repo"
     url = "https://github.com/tamcore/autoupdate-oh-my-zsh-plugins.git"
     refreshPeriod = "168h"
+    clone.args = ["--depth=1"]
+    pull.args = ["--ff-only"]
 
 [".oh-my-zsh/custom/themes/powerlevel10k"]
     type = "git-repo"
     url = "https://github.com/romkatv/powerlevel10k.git"
     refreshPeriod = "168h"
+    clone.args = ["--depth=1"]
+    pull.args = ["--ff-only"]
 
-# Registered with bat by run_onchange_after_build-bat-cache.sh.
+# Registered with bat by .chezmoiscripts/run_onchange_after_build-bat-cache.sh.
 [".config/bat/themes/tokyo_night_moon.tmTheme"]
     type = "file"
     url = "https://raw.githubusercontent.com/folke/tokyonight.nvim/main/extras/sublime/tokyonight_moon.tmTheme"
