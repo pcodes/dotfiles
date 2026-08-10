@@ -61,12 +61,31 @@ themes in its config directory after a cache rebuild, so
 `.chezmoiscripts/run_onchange_after_build-bat-cache.sh` runs `bat cache --build`
 whenever the requested theme changes.
 
-## Machine-local overrides
+## Machine config
 
-Files prefixed `create_` are written once and never overwritten, so per-machine
-settings stay out of git:
+Three places for a setting, depending on how far it should travel:
 
-- `~/.zshrc.local` — sourced by `zshrc` before Oh My Zsh loads
+| Where | In git | For |
+| --- | --- | --- |
+| inline in `dot_zshrc.tmpl` behind an OS guard | yes | per-OS settings |
+| `~/.config/zsh/hosts/<host>.zsh` | yes | one machine, worth syncing |
+| `~/.zshrc.local` | no | one machine, must stay off GitHub |
+
+`zshrc` is a chezmoi template, so per-OS differences don't need a file of their
+own — the plugin list already works this way. The other two load after the
+aliases, late enough to override anything `zshrc` defines.
+
+Nothing loads before Oh My Zsh, so `plugins`, `ZSH_THEME` and `zstyle` have to
+be set in the template itself.
+
+`<host>` is `LocalHostName` on macOS rather than `hostname`, because `hostname`
+follows DHCP and drifts between names on the same machine. It's resolved when
+chezmoi applies, so renaming a machine means renaming its `hosts/` file and
+re-applying.
+
+Files prefixed `create_` are written once and never overwritten:
+
+- `~/.zshrc.local`
 - `~/.config/wezterm/local.lua` — WezTerm settings module
 - `~/.config/nvim/lua/plugins/local.lua` — extra Neovim plugins
 

@@ -44,13 +44,41 @@ Split by which shells zsh sources each file for:
 - `dot_zshrc.tmpl` - interactive shells. Oh My Zsh, prompt, aliases, completions.
   Plugin list is gated per platform.
 
+### Machine Config
+Three places for a setting, in the order `.zshrc` reaches them:
+
+| Where | Tracked? | For |
+| --- | --- | --- |
+| inline in `dot_zshrc.tmpl`, behind `eq .chezmoi.os` | yes | per-OS settings |
+| `~/.config/zsh/hosts/<host>.zsh` | yes | one machine, worth syncing |
+| `~/.zshrc.local` | no | one machine, must stay off GitHub |
+
+The last two load after the aliases, so both can override what `.zshrc` itself
+defines. Nothing loads before Oh My Zsh any more — settings OMZ reads as it
+loads (`plugins`, `ZSH_THEME`, `zstyle`) are set in the template, which is the
+only thing that runs early enough.
+
+`<host>` is baked in at apply time: `LocalHostName` on macOS, `.chezmoi.hostname`
+elsewhere. Not `hostname` — that follows DHCP and drifts between names on one
+machine. Renaming a machine means renaming its `hosts/` file and re-applying;
+nothing warns when a host file stops matching, it just stops being sourced.
+
 ### Local Customization Pattern
-Several configs use a "local" file pattern for machine-specific settings that shouldn't be committed:
-- `dot_zshrc.tmpl` sources `~/.zshrc.local`
-- `dot_config/wezterm/create_local.lua` - Wezterm local settings module
+`create_` files are created once and never overwritten, so machine-local edits
+survive `chezmoi apply`:
+- `create_dot_zshrc.local`
+- `dot_config/exact_wezterm/create_local.lua` - Wezterm local settings module
 - `dot_config/nvim/lua/plugins/create_local.lua` - Neovim local plugins
 
-The `create_` prefix ensures these files are created once but never overwritten.
+### Exact Directories
+`exact_` directories delete anything in the target that isn't in the source, so
+removing a file from this repo actually removes it from the machine: `exact_bat`,
+`exact_wezterm`, `exact_zsh`, `exact_hosts`, `nvim/lua/exact_config`.
+
+Verified: `exact_` does **not** touch files supplied by `.chezmoiexternal.toml`
+(the bat theme survives), and does **not** touch `create_` files or their local
+edits. `nvim/lua/plugins` is deliberately left inexact — plugin files get dropped
+in there by hand.
 
 ### External Dependencies
 `.chezmoiexternal.toml` defines git repos and files fetched automatically:
@@ -68,7 +96,7 @@ target path under `$HOME`.
 
 `run_onchange_after_build-bat-cache.sh.tmpl` runs `bat cache --build`, which is
 what makes the externally-fetched theme selectable. It re-runs when the hash of
-`dot_config/bat/config` embedded in it changes.
+`dot_config/exact_bat/config` embedded in it changes.
 
 ### Conditional Ignore
 `.chezmoiignore` excludes repo docs (`README.md`, `CLAUDE.md`) from being applied to `$HOME`.
