@@ -1,0 +1,14 @@
+# Targets deleted from $HOME that other machines must also clean up. Chezmoi
+# acts on this at the next apply; drop an entry once every machine has caught up.
+#
+# .profile is a rustup-init leftover. zsh never reads it outside sh-emulation
+# mode, the login shell here is zsh, and there is no bash_profile or bashrc, so
+# nothing on these machines sourced it. What it did -- source ~/.cargo/env --
+# .zshenv already does, guarded on the file existing.
+#
+# .zsh_completions held one stale _chezmoi.zsh. The directory was never on
+# fpath, and compinit would not have loaded that filename anyway; it wants
+# `_chezmoi`, which Homebrew's chezmoi formula already installs into
+# $HOMEBREW_PREFIX/share/zsh/site-functions.
+.profile
+.zsh_completions
