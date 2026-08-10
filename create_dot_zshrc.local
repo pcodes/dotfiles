@@ -1,1 +1,10 @@
-# Add local content
+# Machine-local settings, created once and never overwritten or committed.
+# The place for work settings and anything else that must stay off GitHub.
+#
+# Sourced last, after Oh My Zsh and after the aliases, so anything here wins.
+# The one thing that cannot go here is config Oh My Zsh reads as it loads --
+# plugins, ZSH_THEME, zstyle. Those are already set in the template that
+# generates ~/.zshrc, behind an OS guard where they differ by platform.
+#
+# For settings worth syncing to another machine, use the tracked per-host file
+# at ~/.config/zsh/hosts/ instead.

@@ -1,3 +1,7 @@
+{{- $hostkey := .chezmoi.hostname -}}
+{{- if eq .chezmoi.os "darwin" -}}
+{{-   $hostkey = output "scutil" "--get" "LocalHostName" | trim -}}
+{{- end -}}
 ### ZSH CONFIG OPTIONS ###
 # Everything in this section must be set *before* initializing Oh My ZSH
 
@@ -46,9 +50,6 @@ plugins=(
 {{- end }}
 )
 
-# Source the local zshrc before OMZ in case there are OMZ-specific settings
-[[ -f $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
-
 source $ZSH/oh-my-zsh.sh
 
 chezmoi-cd() {
@@ -93,6 +94,28 @@ if (( $+commands[lsd] )); then
     alias lla='ls -la'
     alias lt='ls --tree'
 fi
+
+### MACHINE CONFIG ###
+# Both files load after the aliases above, so either can override them. That is
+# why they are here and not before Oh My Zsh, where nothing they set could win
+# against what this file defines afterwards.
+#
+#   ~/.config/zsh/hosts/{{ $hostkey }}.zsh -- this machine, tracked in git
+#   ~/.zshrc.local -- this machine, never committed
+#
+# Per-OS settings want neither file. This is a chezmoi template, so they go
+# inline behind an `eq .chezmoi.os` guard, the way the plugin list above does.
+{{ if eq .chezmoi.os "darwin" }}
+# The host key is LocalHostName, not `hostname`. `hostname` follows DHCP -- this
+# machine answers to both Pats-Air and Pats-MacBook-Air depending on the network
+# -- so a file keyed on it would load only on some networks. It is resolved at
+# `chezmoi apply` time, so renaming the machine needs an apply to take effect.
+{{ end -}}
+zsh_host_config=${XDG_CONFIG_HOME:-$HOME/.config}/zsh/hosts/{{ $hostkey }}.zsh
+[[ -f $zsh_host_config ]] && source $zsh_host_config
+unset zsh_host_config
+
+[[ -f $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
 
 ### SYNTAX HIGHLIGHTING ###
 # Keep this last, and after the fzf setup above.
