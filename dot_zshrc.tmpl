@@ -77,6 +77,13 @@ fi
 # Set up fzf key bindings and fuzzy completion
 (( $+commands[fzf] )) && source <(fzf --zsh)
 
+# Node version per project: fnm reads .nvmrc and switches on cd, so a checkout
+# runs the major it is tested and deployed against rather than whatever Homebrew
+# installed last. Here rather than in .zshenv because .zprofile re-prepends
+# $my_path after path_helper, which would demote fnm back under
+# $HOMEBREW_PREFIX/bin -- .zshrc is the last file a login shell reads.
+(( $+commands[fnm] )) && eval "$(fnm env --use-on-cd --shell zsh)"
+
 ### ALIASES ###
 # Set bash aliases. These will override anything from OMZ plugins
 
