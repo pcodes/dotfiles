@@ -61,6 +61,63 @@ themes in its config directory after a cache rebuild, so
 `.chezmoiscripts/run_onchange_after_build-bat-cache.sh` runs `bat cache --build`
 whenever the requested theme changes.
 
+## Claude Code
+
+Tracked: `~/.claude/CLAUDE.md`, the statusline script, and the `chezmoi` skill.
+Everything else under `~/.claude` is state the tool owns — transcripts, history,
+caches, `plugins/` — and stays out.
+
+`settings.json` is deliberately untracked. Claude Code rewrites it whenever the
+model, effort level or plugin set changes, so a managed copy would sit in
+permanent conflict; and its `autoMode` block caches per-project infrastructure
+detail that has no business in a public repo. Nothing here reinstalls plugins as
+a result — the tables below are the runbook.
+
+### Marketplaces
+
+| Name | Repo |
+| --- | --- |
+| `claude-plugins-official` | [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) |
+| `anthropic-agent-skills` | [anthropics/skills](https://github.com/anthropics/skills) |
+| `obsidian-skills` | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) |
+| `i-have-adhd` | [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd) |
+
+The first is built in. The rest need `/plugin marketplace add <repo>` before
+their plugins resolve.
+
+### Enabled plugins
+
+| Plugin | Marketplace | For |
+| --- | --- | --- |
+| `superpowers` | `claude-plugins-official` | brainstorming, TDD, systematic debugging |
+| `vercel` | `claude-plugins-official` | Next.js, AI SDK, deploys |
+| `supabase` | `claude-plugins-official` | Postgres, auth, storage |
+| `lua-lsp` | `claude-plugins-official` | Lua language server |
+| `pyright-lsp` | `claude-plugins-official` | Python language server |
+| `rust-analyzer-lsp` | `claude-plugins-official` | Rust language server |
+| `swift-lsp` | `claude-plugins-official` | Swift language server |
+| `example-skills` | `anthropic-agent-skills` | design, art, docs, skill authoring |
+| `obsidian` | `obsidian-skills` | vaults, Bases, Canvas |
+| `i-have-adhd` | `i-have-adhd` | action-first output shaping |
+
+Install each with `/plugin install <plugin>@<marketplace>`.
+
+### Skills
+
+`exact_skills` holds only skills written here, so removing one from this repo
+removes it from the machine. Project-specific skills live with their project
+instead — `ha-dashboards` in [pcodes/ha-cli](https://github.com/pcodes/ha-cli),
+the Ansible ones in
+[pcodes/homelab_ansible](https://github.com/pcodes/homelab_ansible).
+
+`npx skills` is a separate, cross-agent package manager: it installs into a
+shared `~/.agents/skills/` store and symlinks into each agent's skill directory,
+so chezmoi leaves it alone. `~/.agents/.skill-lock.json` records what's there.
+
+```
+npx skills add vercel-labs/skills@find-skills -g -y
+```
+
 ## Machine config
 
 Three places for a setting, depending on how far it should travel:

@@ -73,12 +73,35 @@ survive `chezmoi apply`:
 ### Exact Directories
 `exact_` directories delete anything in the target that isn't in the source, so
 removing a file from this repo actually removes it from the machine: `exact_bat`,
-`exact_wezterm`, `exact_zsh`, `exact_hosts`, `nvim/lua/exact_config`.
+`exact_wezterm`, `exact_zsh`, `exact_hosts`, `nvim/lua/exact_config`, and
+`claude/exact_skills` down through `exact_chezmoi/exact_references`.
+
+`exact_` applies per directory and does not descend, which is why the skill tree
+repeats the prefix at every level.
 
 Verified: `exact_` does **not** touch files supplied by `.chezmoiexternal.toml`
 (the bat theme survives), and does **not** touch `create_` files or their local
 edits. `nvim/lua/plugins` is deliberately left inexact — plugin files get dropped
 in there by hand.
+
+Scoping a diff to a path hides `exact_` deletions: `chezmoi diff ~/.claude`
+prints nothing while bare `chezmoi diff` prints the deletion (v2.72.0).
+`chezmoi status` reports them as ` D` rows either way, so use status before
+applying a change that adds or narrows an `exact_` directory.
+
+### Claude Code config
+`dot_claude` tracks three things: `CLAUDE.md`, `executable_statusline-command.sh`,
+and `exact_skills/`. It is **not** an `exact_` directory — the rest of `~/.claude`
+is transcripts, history, caches and a 99 MB `plugins/` tree that chezmoi must
+leave alone.
+
+`settings.json` is untracked on purpose. Claude Code rewrites it, and its
+`autoMode` block caches per-project infrastructure detail that this repo is too
+public for. The plugin and marketplace set is documented in README.md instead, as
+a manual runbook.
+
+Skills here are only the ones that apply everywhere. Project-specific skills
+belong in that project's own `.claude/skills/`.
 
 ### External Dependencies
 `.chezmoiexternal.toml` defines git repos and files fetched automatically:
