@@ -138,41 +138,20 @@ Install each with `/plugin install <plugin>@<marketplace>`.
 is why it is tracked with `empty_` — chezmoi drops zero-length files that lack
 the attribute.
 
-The plugin's own SessionStart hook cannot read it here. That hook runs
-`node -e ...`, and this machine has no `node`: Claude Code comes from the Arch
-`claude-code` package, a native binary that keeps its runtime to itself, and
-nothing else here installs one. The hook exits 127, and it is written never to
-block session start, so it fails without saying so.
+The plugin reads the flag from a SessionStart hook that runs `node -e ...`, so
+the `nodejs` package is a hard requirement. Claude Code here is the Arch
+`claude-code` package, a native binary that keeps its runtime to itself and
+exposes no `node` of its own. Without one the hook exits 127, and it is written
+never to block session start, so it fails without saying so and the flag injects
+nothing.
 
-The plugin ships `hooks/always-on.sh` for exactly this case — the same logic in
-POSIX sh and awk, no Node involved. Pointing at it takes another key added to
-the untracked `settings.json` by hand:
+`fnm` does not cover this. Hooks run under a non-interactive `/bin/sh`, which
+never sources the `fnm env` line in `.zshrc`, so a per-project Node stays
+invisible to them. Hooks want `node` on the system PATH: `pacman -S nodejs`.
 
-```json
-"hooks": {
-  "SessionStart": [
-    {
-      "matcher": "startup|resume|clear|compact",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "sh \"$(ls -d \"$HOME\"/.claude/plugins/cache/i-have-adhd/i-have-adhd/*/hooks/always-on.sh | tail -1)\"",
-          "timeout": 10
-        }
-      ]
-    }
-  ]
-}
-```
-
-`CLAUDE_PLUGIN_ROOT` is set only for hooks a plugin declares itself, so this one
-needs a real path. The glob keeps it off a pinned version number, and
-`always-on.sh` resolves `SKILL.md` from `$0` rather than the environment, so an
-absolute path is all it wants.
-
-The plugin's Node hook still runs and still fails, which costs nothing while it
-produces no output. Installing Node here would make both fire and inject the
-ruleset twice — drop this key if that day comes.
+The `vercel` plugin needs it for the same reason — its three SessionStart hooks
+are Node scripts too, and they fail the same silent way. `superpowers` is
+unaffected; it shells through `hooks/run-hook.cmd` instead.
 
 ### Skills
 
