@@ -87,6 +87,21 @@ permanent conflict; and its `autoMode` block caches per-project infrastructure
 detail that has no business in a public repo. Nothing here reinstalls plugins as
 a result — the tables below are the runbook.
 
+### Status line
+
+`chezmoi apply` installs the script, but only `settings.json` decides whether
+anything runs it, and that file is untracked. On a new machine the status line
+stays blank until this key is added by hand:
+
+```json
+"statusLine": { "type": "command", "command": "~/.claude/statusline-command.sh" }
+```
+
+The script is a template. Its OS glyph branches on `.chezmoi.os` — Apple on
+macOS, the Arch logo on Arch and Arch-derived distros, Tux on other Linux — and
+comes from the Nerd Font the terminal is set to, so a machine without one shows
+a placeholder box.
+
 ### Marketplaces
 
 | Name | Repo |

@@ -91,7 +91,7 @@ prints nothing while bare `chezmoi diff` prints the deletion (v2.72.0).
 applying a change that adds or narrows an `exact_` directory.
 
 ### Claude Code config
-`dot_claude` tracks three things: `CLAUDE.md`, `executable_statusline-command.sh`,
+`dot_claude` tracks three things: `CLAUDE.md`, `executable_statusline-command.sh.tmpl`,
 and `exact_skills/`. It is **not** an `exact_` directory — the rest of `~/.claude`
 is transcripts, history, caches and a 99 MB `plugins/` tree that chezmoi must
 leave alone.
@@ -99,7 +99,14 @@ leave alone.
 `settings.json` is untracked on purpose. Claude Code rewrites it, and its
 `autoMode` block caches per-project infrastructure detail that this repo is too
 public for. The plugin and marketplace set is documented in README.md instead, as
-a manual runbook.
+a manual runbook. The `statusLine` key lives there too: the script is tracked but
+nothing invokes it until that key exists, so a fresh machine gets the script and
+no status line.
+
+`executable_statusline-command.sh.tmpl` is a template only for its OS glyph,
+which branches on `.chezmoi.os` and, on Linux, on `osRelease` for the Arch logo.
+The glyph is empty on platforms with no branch, and the `printf` drops its
+padding along with it.
 
 Skills here are only the ones that apply everywhere. Project-specific skills
 belong in that project's own `.claude/skills/`.
