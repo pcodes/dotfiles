@@ -131,6 +131,49 @@ their plugins resolve.
 
 Install each with `/plugin install <plugin>@<marketplace>`.
 
+### ADHD always-on
+
+`dot_claude/empty_dot_i-have-adhd-always` is the opt-in flag for the
+`i-have-adhd` plugin. Only its existence is checked, never its contents, which
+is why it is tracked with `empty_` — chezmoi drops zero-length files that lack
+the attribute.
+
+The plugin's own SessionStart hook cannot read it here. That hook runs
+`node -e ...`, and this machine has no `node`: Claude Code comes from the Arch
+`claude-code` package, a native binary that keeps its runtime to itself, and
+nothing else here installs one. The hook exits 127, and it is written never to
+block session start, so it fails without saying so.
+
+The plugin ships `hooks/always-on.sh` for exactly this case — the same logic in
+POSIX sh and awk, no Node involved. Pointing at it takes another key added to
+the untracked `settings.json` by hand:
+
+```json
+"hooks": {
+  "SessionStart": [
+    {
+      "matcher": "startup|resume|clear|compact",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "sh \"$(ls -d \"$HOME\"/.claude/plugins/cache/i-have-adhd/i-have-adhd/*/hooks/always-on.sh | tail -1)\"",
+          "timeout": 10
+        }
+      ]
+    }
+  ]
+}
+```
+
+`CLAUDE_PLUGIN_ROOT` is set only for hooks a plugin declares itself, so this one
+needs a real path. The glob keeps it off a pinned version number, and
+`always-on.sh` resolves `SKILL.md` from `$0` rather than the environment, so an
+absolute path is all it wants.
+
+The plugin's Node hook still runs and still fails, which costs nothing while it
+produces no output. Installing Node here would make both fire and inject the
+ruleset twice — drop this key if that day comes.
+
 ### Skills
 
 `exact_skills` holds only skills written here, so removing one from this repo
