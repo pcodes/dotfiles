@@ -41,3 +41,9 @@ To open a page in my running Firefox: `open -a Firefox <url-or-file>`.
 - Do this **proactively** when the project crosses that line — don't wait for me to ask, and don't wait until the prompts get annoying. Mention it, then do it.
 - Scope the allowlist to the project's real commands (its runner, its scripts, read-only inspection). Prefer narrow prefixes over blanket wildcards, and keep anything destructive or outward-facing out of it.
 - `/fewer-permission-prompts` derives the list from what has actually been run, which beats guessing.
+
+## Time estimates
+
+- **Don't give clock-time estimates unless I ask.** Give size instead: number of steps, files touched, and the main unknown. This overrides the i-have-adhd skill's rule to always give one.
+- **When I ask, give two numbers:** your working time, and wall time including stops for me (1Password unlocks, approvals, questions). On multi-hour plans your working-time estimates land close, but wall time runs 1.7–5× longer because of those stops.
+- **Base them on measured durations, not guesses.** A turn with 1–3 tool calls takes about 30 s, 4–10 calls 1–4 min, 11–30 calls 5–9 min. Writing runs at about 90 tokens/s, so a large file write costs minutes.
