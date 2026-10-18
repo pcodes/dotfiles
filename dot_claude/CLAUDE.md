@@ -4,19 +4,15 @@
 
 - **Neovim** is the primary editor, managed by the LazyVim distribution
 - **Mason** (Neovim plugin) manages LSPs, linters, and formatters — installed to `~/.local/share/nvim/mason/bin/`. Check there before installing tools via pip/npm/brew.
-- **Firefox** is my browser for browsing. For automated previews, screenshots and testing, use **Chromium**. I'll flag Gecko-specific problems when I see them, and only then check that page in Firefox. Use WebKit as well for anything I read on the iPad, since every iPad browser runs it.
-
-**Headless captures: Playwright** (`uv tool install playwright`, then `playwright install chromium webkit`). It takes a URL, so a local file needs an absolute `file://` path:
+- **Firefox** is my browser. Automated previews, screenshots and tests use **Chromium** through Playwright (`uv tool install playwright`), plus WebKit for anything I read on the iPad. If I flag a Gecko-specific problem, `ffshot` (on PATH) captures the page in Firefox.
 
 ```
-playwright screenshot --full-page file:///abs/page.html page.png                      # Chromium
+playwright screenshot --full-page file:///abs/page.html page.png
 playwright screenshot --full-page --color-scheme dark file:///abs/page.html dark.png
 playwright screenshot -b webkit --device "iPad Pro 11" --full-page file:///abs/page.html ipad.png
 ```
 
-**For a Gecko check after I flag one, use `ffshot`** (`~/Code/scripts/ffshot`, on PATH): `ffshot -t both -o out/page.png page.html` captures light and dark. Don't hand-roll `firefox --headless --screenshot`, and don't use Playwright's Firefox: both fail on this Mac in ways the script handles (see `~/Code/scripts/README.md`).
-
-To open a URL as a tab in my **running** instance: `open -a Firefox <url-or-file>`.
+To open a page in my running Firefox: `open -a Firefox <url-or-file>`.
 
 ## Working in git repos
 
