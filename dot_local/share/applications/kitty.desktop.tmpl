@@ -1,0 +1,20 @@
+# Shadows the packaged /usr/share/applications/kitty.desktop to change its icon
+# and nothing else. KDE's taskbar takes a window's icon from its desktop file,
+# never from kitty.app.png, and no installed icon theme ships a kitty icon to
+# override by name, so the Outrun icon is named here by absolute path.
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=kitty
+GenericName=Terminal emulator
+Comment=Fast, feature-rich, GPU based terminal
+TryExec=kitty
+StartupNotify=true
+Exec=kitty
+Icon={{ .chezmoi.homeDir }}/.config/kitty/kitty.app.png
+Categories=System;TerminalEmulator;
+X-TerminalArgExec=--
+X-TerminalArgTitle=--title
+X-TerminalArgAppId=--class
+X-TerminalArgDir=--working-directory
+X-TerminalArgHold=--hold

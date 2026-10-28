@@ -61,6 +61,11 @@ macOS and Linux. On macOS the Dock keeps its cached icon until it's cleared:
 rm /var/folders/*/*/*/com.apple.dock.iconcache; killall Dock
 ```
 
+KDE's taskbar ignores that file and takes the icon from `kitty.desktop`, so
+Linux also gets `~/.local/share/applications/kitty.desktop`: the packaged entry
+with its `Icon=` pointed at the PNG. After the first apply, run `kbuildsycoca6`
+and reopen kitty.
+
 ## Tmux
 
 `tmux.conf` installs TPM on first run and loads plugins from there.

@@ -135,6 +135,8 @@ what makes the externally-fetched theme selectable. It re-runs when the hash of
 
 ### Conditional Ignore
 `.chezmoiignore` excludes repo docs (`README.md`, `CLAUDE.md`) from being applied to `$HOME`.
+It also gates files by OS: `.zprofile` is macOS-only, and the kitty
+`.desktop` override is Linux-only.
 
 ## Linters/Formatters
 

@@ -6,3 +6,9 @@ CLAUDE.md
 {{ if ne .chezmoi.os "darwin" }}
 .zprofile
 {{ end }}
+
+# Desktop entries are a Linux launcher concept; macOS takes kitty's icon from
+# kitty.app.png alone.
+{{ if eq .chezmoi.os "darwin" }}
+.local/share/applications/kitty.desktop
+{{ end }}
