@@ -1,0 +1,17 @@
+onboarding = false
+
+[keys]
+# Same prefix as tmux.
+prefix = "ctrl+a"
+
+[ui]
+status_indicators = "symbols"
+# Tabs along the bottom, where tmux keeps its status line.
+tab_bar_position = "bottom"
+
+[ui.toast]
+delivery = "herdr"
+
+[theme]
+name = "tokyo-night"
+auto_switch = false
