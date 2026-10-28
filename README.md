@@ -77,7 +77,8 @@ whenever the requested theme changes.
 
 ## Claude Code
 
-Tracked: `~/.claude/CLAUDE.md`, the statusline script, and the `chezmoi` skill.
+Tracked: `~/.claude/CLAUDE.md`, the statusline script, and the `~/.claude/skills`
+symlink.
 Everything else under `~/.claude` is state the tool owns — transcripts, history,
 caches, `plugins/` — and stays out.
 
@@ -155,8 +156,20 @@ unaffected; it shells through `hooks/run-hook.cmd` instead.
 
 ### Skills
 
-`exact_skills` holds only skills written here, so removing one from this repo
-removes it from the machine. Project-specific skills live with their project
+`~/.claude/skills` is a symlink to `~/Code/claude-skills`, cloned from the
+private [pcodes/claude-skills](https://github.com/pcodes/claude-skills). chezmoi
+creates the symlink but not the clone, so on a new machine clone it first:
+
+```sh
+gh repo clone pcodes/claude-skills ~/Code/claude-skills
+```
+
+A real `~/.claude/skills` directory already on the machine has to be moved out
+of the way first, keeping its `synced/` folder: Claude Code fills that with the
+skills it syncs from claude.ai, and it belongs at `~/Code/claude-skills/synced`,
+where that repo gitignores it.
+
+Project-specific skills live with their project
 instead — `ha-dashboards` in [pcodes/ha-cli](https://github.com/pcodes/ha-cli),
 the Ansible ones in
 [pcodes/homelab_ansible](https://github.com/pcodes/homelab_ansible).

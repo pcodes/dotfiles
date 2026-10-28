@@ -74,11 +74,10 @@ survive `chezmoi apply`:
 ### Exact Directories
 `exact_` directories delete anything in the target that isn't in the source, so
 removing a file from this repo actually removes it from the machine: `exact_bat`,
-`exact_kitty`, `exact_wezterm`, `exact_zsh`, `exact_hosts`, `nvim/lua/exact_config`, and
-`claude/exact_skills` down through `exact_chezmoi/exact_references`.
+`exact_kitty`, `exact_wezterm`, `exact_zsh`, `exact_hosts`, and `nvim/lua/exact_config`.
 
-`exact_` applies per directory and does not descend, which is why the skill tree
-repeats the prefix at every level.
+`exact_` applies per directory and does not descend, so a subdirectory that
+should be exact needs the prefix too.
 
 Verified: `exact_` does **not** touch files supplied by `.chezmoiexternal.toml`
 (the bat theme survives), and does **not** touch `create_` files or their local
@@ -91,8 +90,8 @@ prints nothing while bare `chezmoi diff` prints the deletion (v2.72.0).
 applying a change that adds or narrows an `exact_` directory.
 
 ### Claude Code config
-`dot_claude` tracks three things: `CLAUDE.md`, `executable_statusline-command.sh.tmpl`,
-and `exact_skills/`. It is **not** an `exact_` directory — the rest of `~/.claude`
+`dot_claude` tracks four things: `CLAUDE.md`, `executable_statusline-command.sh.tmpl`,
+the `empty_dot_i-have-adhd-always` flag, and `symlink_skills.tmpl`. It is **not** an `exact_` directory — the rest of `~/.claude`
 is transcripts, history, caches and a 99 MB `plugins/` tree that chezmoi must
 leave alone.
 
@@ -108,8 +107,12 @@ which branches on `.chezmoi.os` and, on Linux, on `osRelease` for the Arch logo.
 The glyph is empty on platforms with no branch, and the `printf` drops its
 padding along with it.
 
-Skills here are only the ones that apply everywhere. Project-specific skills
-belong in that project's own `.claude/skills/`.
+`~/.claude/skills` is a symlink to `~/Code/claude-skills`, a separate private
+repo (pcodes/claude-skills) that holds the skills that apply everywhere. chezmoi
+does not clone it, so the symlink dangles until it is cloned by hand. Claude Code
+writes its claude.ai-synced skills to `~/.claude/skills/synced/`, which lands in
+that repo and is gitignored there. Project-specific skills belong in that
+project's own `.claude/skills/`.
 
 ### External Dependencies
 `.chezmoiexternal.toml` defines git repos and files fetched automatically:
