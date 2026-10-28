@@ -48,7 +48,9 @@ and `bat` are themed to match.
 
 kitty's theme is fetched as an external from tokyonight.nvim. Matching WezTerm
 takes more than the same font name; `kitty.conf.tmpl` explains each setting.
-The row-height tuning was measured on macOS and is skipped on Linux.
+The row-height tuning is macOS-only. On Linux kitty's cells already match
+WezTerm's at the same size, so it uses WezTerm's 18pt and nothing else. Tabs
+switch on Ctrl+Shift+1–9 there, since KDE keeps Super+1–9 for itself.
 
 kitty's icon is "Outrun (Neue)" from
 [k0nserv/kitty-icon](https://github.com/k0nserv/kitty-icon) (CC BY 4.0), fetched

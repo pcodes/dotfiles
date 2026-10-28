@@ -1,7 +1,13 @@
 # kitty only accepts fonts macOS marks as monospace, which the plain
 # "FiraCode Nerd Font" that WezTerm uses is not.
 font_family FiraCode Nerd Font Mono
+{{- if eq .chezmoi.os "darwin" }}
 font_size   20.0
+{{- else }}
+# WezTerm's size. On Linux both terminals render through FreeType, and at the
+# same size their cells match exactly: 15x30 px each at 18pt and 96 DPI.
+font_size   18.0
+{{- end }}
 
 # The Mono variant shrinks icons to one cell. Draw them from the regular
 # variant instead, so lsd and prompt icons are as large as in WezTerm.
@@ -12,8 +18,7 @@ symbol_map U+E000-U+F8FF,U+F0000-U+FFFFF FiraCode Nerd Font
 # (59 px vs 50 px at 20pt). A percentage keeps them matched under Cmd+=/-.
 # Shrinking the cell clips its bottom, so raise the baseline to keep
 # descenders and underscores; 4px holds from 18pt to at least 26pt.
-# Measured on macOS only. Linux renders through FreeType with its own
-# metrics, so it keeps kitty's defaults rather than risk clipped glyphs.
+# macOS only: on Linux the cells already match, so it needs none of this.
 modify_font cell_height 85%
 modify_font baseline    4px
 {{- end }}
@@ -31,6 +36,7 @@ include themes/tokyonight_moon.conf
 macos_option_as_alt left
 
 macos_quit_when_last_window_closed yes
+{{- if eq .chezmoi.os "darwin" }}
 
 # WezTerm binds these by default; kitty binds none.
 map cmd+1 goto_tab 1
@@ -42,6 +48,21 @@ map cmd+6 goto_tab 6
 map cmd+7 goto_tab 7
 map cmd+8 goto_tab 8
 map cmd+9 goto_tab 9
+{{- else }}
+
+# WezTerm's other default for switching tabs. Its Super+1-9 never reaches a
+# window under KDE, which takes it for the task manager. These replace kitty's
+# own Ctrl+Shift+1-9, which focus the Nth split within a tab.
+map ctrl+shift+1 goto_tab 1
+map ctrl+shift+2 goto_tab 2
+map ctrl+shift+3 goto_tab 3
+map ctrl+shift+4 goto_tab 4
+map ctrl+shift+5 goto_tab 5
+map ctrl+shift+6 goto_tab 6
+map ctrl+shift+7 goto_tab 7
+map ctrl+shift+8 goto_tab 8
+map ctrl+shift+9 goto_tab 9
+{{- end }}
 
 # Machine-local overrides. Last, so they win.
 include local.conf
