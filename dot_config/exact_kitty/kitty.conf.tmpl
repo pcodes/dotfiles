@@ -6,13 +6,17 @@ font_size   20.0
 # The Mono variant shrinks icons to one cell. Draw them from the regular
 # variant instead, so lsd and prompt icons are as large as in WezTerm.
 symbol_map U+E000-U+F8FF,U+F0000-U+FFFFF FiraCode Nerd Font
+{{- if eq .chezmoi.os "darwin" }}
 
 # kitty's rows come out ~18% taller than WezTerm's at the same font size
 # (59 px vs 50 px at 20pt). A percentage keeps them matched under Cmd+=/-.
 # Shrinking the cell clips its bottom, so raise the baseline to keep
 # descenders and underscores; 4px holds from 18pt to at least 26pt.
+# Measured on macOS only. Linux renders through FreeType with its own
+# metrics, so it keeps kitty's defaults rather than risk clipped glyphs.
 modify_font cell_height 85%
 modify_font baseline    4px
+{{- end }}
 
 # WezTerm pads 1 cell left/right and half a cell top/bottom, ~11pt each at 18pt.
 window_padding_width 11

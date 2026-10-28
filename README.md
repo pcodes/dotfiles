@@ -47,7 +47,8 @@ kitty and WezTerm, both on Tokyo Night Moon and set up to look the same. Tmux
 and `bat` are themed to match.
 
 kitty's theme is fetched as an external from tokyonight.nvim. Matching WezTerm
-takes more than the same font name; `kitty.conf` explains each setting.
+takes more than the same font name; `kitty.conf.tmpl` explains each setting.
+The row-height tuning was measured on macOS and is skipped on Linux.
 
 ## Tmux
 
