@@ -4,7 +4,7 @@
 
 - **Neovim** is the primary editor, managed by the LazyVim distribution
 - **Mason** (Neovim plugin) manages LSPs, linters, and formatters — installed to `~/.local/share/nvim/mason/bin/`. Check there before installing tools via pip/npm/brew.
-- **Firefox** is my browser. Automated previews, screenshots and tests use **Chromium** through Playwright (`uv tool install playwright`), plus WebKit for anything I read on the iPad. If I flag a Gecko-specific problem, `ffshot` (on PATH) captures the page in Firefox.
+- **Firefox** is my browser. Automated previews, screenshots and tests use **Chromium** through Playwright (`uv tool install playwright`), plus WebKit for anything I read on the iPad. If I flag a Gecko-specific problem, capture that page with `playwright screenshot -b firefox`.
 
 ```
 playwright screenshot --full-page file:///abs/page.html page.png
@@ -12,7 +12,7 @@ playwright screenshot --full-page --color-scheme dark file:///abs/page.html dark
 playwright screenshot -b webkit --device "iPad Pro 11" --full-page file:///abs/page.html ipad.png
 ```
 
-To open a page in my running Firefox: `open -a Firefox <url-or-file>`.
+To open a page in my running Firefox: `open -a Firefox <url-or-file>` on the Mac, `firefox <url-or-file>` on Linux.
 
 ## Working in git repos
 
