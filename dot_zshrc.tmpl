@@ -71,6 +71,9 @@ if (( $+commands[op] )); then
     eval "$(op completion zsh)"; compdef _op op
 fi
 
+# herdr's script registers itself with compdef, and generating it takes ~3ms.
+(( $+commands[herdr] )) && eval "$(herdr completion zsh)"
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
