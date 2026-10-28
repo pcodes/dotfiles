@@ -70,6 +70,16 @@ and reopen kitty.
 
 `tmux.conf` installs TPM on first run and loads plugins from there.
 
+## herdr
+
+[herdr](https://herdr.dev) is a terminal multiplexer for coding agents. Its
+config takes tmux's Ctrl+A prefix, puts the tab row at the bottom, and adds
+Alt+H / Alt+L for previous / next tab (Alt+J/K stay with LazyVim). herdr's own
+settings screen can write to `~/.config/herdr/config.toml`, so after changing
+something there, `chezmoi re-add` brings it back here. `.zshrc` loads its
+completions, and its agent skill lives in claude-skills, regenerated with
+`herdr --skill`.
+
 ## Neovim
 
 [LazyVim](https://www.lazyvim.org/) as the base; the files here are
