@@ -67,13 +67,14 @@ nothing warns when a host file stops matching, it just stops being sourced.
 `create_` files are created once and never overwritten, so machine-local edits
 survive `chezmoi apply`:
 - `create_dot_zshrc.local`
+- `dot_config/exact_kitty/create_local.conf` - kitty local settings, included last
 - `dot_config/exact_wezterm/create_local.lua` - Wezterm local settings module
 - `dot_config/nvim/lua/plugins/create_local.lua` - Neovim local plugins
 
 ### Exact Directories
 `exact_` directories delete anything in the target that isn't in the source, so
 removing a file from this repo actually removes it from the machine: `exact_bat`,
-`exact_wezterm`, `exact_zsh`, `exact_hosts`, `nvim/lua/exact_config`, and
+`exact_kitty`, `exact_wezterm`, `exact_zsh`, `exact_hosts`, `nvim/lua/exact_config`, and
 `claude/exact_skills` down through `exact_chezmoi/exact_references`.
 
 `exact_` applies per directory and does not descend, which is why the skill tree
@@ -107,7 +108,7 @@ belong in that project's own `.claude/skills/`.
 `.chezmoiexternal.toml` defines git repos and files fetched automatically:
 - Oh My ZSH and plugins (zsh-syntax-highlighting, zsh-autosuggestions, autoupdate)
 - Powerlevel10k theme
-- Tokyo Night theme file for bat
+- Tokyo Night theme files for bat and kitty
 
 Every entry sets `refreshPeriod`; without it chezmoi re-fetches on every apply.
 Every `git-repo` entry clones at depth 1 and pulls `--ff-only`, which keeps it

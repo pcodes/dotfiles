@@ -50,3 +50,9 @@
     type = "file"
     url = "https://raw.githubusercontent.com/folke/tokyonight.nvim/main/extras/sublime/tokyonight_moon.tmTheme"
     refreshPeriod = "168h"
+
+# Included by name from kitty.conf.
+[".config/kitty/themes/tokyonight_moon.conf"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/folke/tokyonight.nvim/main/extras/kitty/tokyonight_moon.conf"
+    refreshPeriod = "168h"

@@ -43,7 +43,11 @@ widget. The Powerlevel10k prompt itself is in `dot_p10k.zsh`.
 
 ## Terminal
 
-WezTerm, on Tokyo Night Moon. Tmux and `bat` are themed to match.
+kitty and WezTerm, both on Tokyo Night Moon and set up to look the same. Tmux
+and `bat` are themed to match.
+
+kitty's theme is fetched as an external from tokyonight.nvim. Matching WezTerm
+takes more than the same font name; `kitty.conf` explains each setting.
 
 ## Tmux
 
@@ -143,6 +147,7 @@ re-applying.
 Files prefixed `create_` are written once and never overwritten:
 
 - `~/.zshrc.local`
+- `~/.config/kitty/local.conf` — kitty settings, included last
 - `~/.config/wezterm/local.lua` — WezTerm settings module
 - `~/.config/nvim/lua/plugins/local.lua` — extra Neovim plugins
 
