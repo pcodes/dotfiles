@@ -109,6 +109,7 @@ belong in that project's own `.claude/skills/`.
 - Oh My ZSH and plugins (zsh-syntax-highlighting, zsh-autosuggestions, autoupdate)
 - Powerlevel10k theme
 - Tokyo Night theme files for bat and kitty
+- kitty's app icon, `kitty.app.png`
 
 Every entry sets `refreshPeriod`; without it chezmoi re-fetches on every apply.
 Every `git-repo` entry clones at depth 1 and pulls `--ff-only`, which keeps it

@@ -50,6 +50,15 @@ kitty's theme is fetched as an external from tokyonight.nvim. Matching WezTerm
 takes more than the same font name; `kitty.conf.tmpl` explains each setting.
 The row-height tuning was measured on macOS and is skipped on Linux.
 
+kitty's icon is "Outrun (Neue)" from
+[k0nserv/kitty-icon](https://github.com/k0nserv/kitty-icon) (CC BY 4.0), fetched
+as `~/.config/kitty/kitty.app.png`, which kitty applies at startup on both
+macOS and Linux. On macOS the Dock keeps its cached icon until it's cleared:
+
+```sh
+rm /var/folders/*/*/*/com.apple.dock.iconcache; killall Dock
+```
+
 ## Tmux
 
 `tmux.conf` installs TPM on first run and loads plugins from there.

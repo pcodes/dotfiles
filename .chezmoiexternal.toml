@@ -56,3 +56,11 @@
     type = "file"
     url = "https://raw.githubusercontent.com/folke/tokyonight.nvim/main/extras/kitty/tokyonight_moon.conf"
     refreshPeriod = "168h"
+
+# kitty applies kitty.app.png from its config directory at startup, on macOS
+# and Linux alike; the .icns variant would be macOS-only.
+# "Outrun (Neue)" from https://github.com/k0nserv/kitty-icon by k0nserv, CC BY 4.0.
+[".config/kitty/kitty.app.png"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/k0nserv/kitty-icon/main/src/neue_outrun/icon_512x512@2x.png"
+    refreshPeriod = "168h"
