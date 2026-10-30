@@ -128,6 +128,7 @@ a placeholder box.
 | `anthropic-agent-skills` | [anthropics/skills](https://github.com/anthropics/skills) |
 | `obsidian-skills` | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) |
 | `i-have-adhd` | [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd) |
+| `superpowers-dev` | [obra/superpowers](https://github.com/obra/superpowers) |
 
 The first is built in. The rest need `/plugin marketplace add <repo>` before
 their plugins resolve.
@@ -136,7 +137,7 @@ their plugins resolve.
 
 | Plugin | Marketplace | For |
 | --- | --- | --- |
-| `superpowers` | `claude-plugins-official` | brainstorming, TDD, systematic debugging |
+| `superpowers` | `superpowers-dev` | brainstorming, TDD, systematic debugging |
 | `vercel` | `claude-plugins-official` | Next.js, AI SDK, deploys |
 | `supabase` | `claude-plugins-official` | Postgres, auth, storage |
 | `lua-lsp` | `claude-plugins-official` | Lua language server |
