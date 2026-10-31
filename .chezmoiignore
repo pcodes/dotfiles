@@ -8,9 +8,10 @@ CLAUDE.md
 {{ end }}
 
 # Desktop entries are a Linux launcher concept; macOS takes kitty's icon from
-# kitty.app.png alone.
+# kitty.app.png alone. Ignored as a whole directory: ignoring only the file still
+# leaves chezmoi creating an empty applications/ on macOS.
 {{ if eq .chezmoi.os "darwin" }}
-.local/share/applications/kitty.desktop
+.local/share/applications
 {{ end }}
 
 # ~/.claude is for personal machines only (`personal` in .chezmoi.toml.tmpl).
