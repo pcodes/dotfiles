@@ -1,0 +1,19 @@
+{{- if and (hasKey . "personal") (not .personal) -}}
+#!/bin/sh
+# On a machine answered no to `personal`, removes the Claude config that chezmoi
+# wrote there before. Runs once per machine, so Claude config written by hand
+# there later stays. Exact paths only: the rest of ~/.claude is Claude Code's
+# own (settings.json, transcripts). A skills directory, rather than the skills
+# link, is not ours to delete.
+
+set -eu
+
+claude={{ joinPath .chezmoi.destDir ".claude" | quote }}
+
+rm -f -- "$claude/CLAUDE.md" "$claude/.i-have-adhd-always" "$claude/statusline-command.sh"
+if [ -L "$claude/skills" ]; then
+    rm -f -- "$claude/skills"
+elif [ -d "$claude/skills" ]; then
+    echo "remove-claude-config: left $claude/skills, a directory rather than the skills link" >&2
+fi
+{{ end -}}

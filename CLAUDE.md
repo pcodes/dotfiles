@@ -69,13 +69,17 @@ bootstrap's `chezmoi init --apply pcodes`: `personal`, a bool stored in the
 untracked `~/.config/chezmoi/chezmoi.toml`. True on the MacBook Air and the
 CachyOS box, false on the work Mac. It gates the Claude Code config (below).
 
-The key is absent on a machine that has not re-run `chezmoi init` since the
-switch was added, and `missingkey=error` makes a bare `.personal` fail there.
-Read it with `dig "personal" false .`, or guard with `hasKey . "personal"` when
-absent and false must differ.
+The key is absent from a config that `chezmoi init` has not regenerated from
+this template, and `missingkey=error` makes a bare `.personal` fail there. Read
+it with `dig "personal" false .`, or guard with `hasKey . "personal"` when absent
+and false must differ.
 
 To answer without a prompt, `--promptBool` takes the prompt text, not the key:
 `chezmoi init --promptBool 'Personal machine (gets Claude Code config)=true'`.
+
+`chezmoi init` rewrites the whole config file from the template. Any other
+per-machine chezmoi setting must live in `.chezmoi.toml.tmpl`, or the next init
+drops it.
 
 ### Local Customization Pattern
 `create_` files are created once and never overwritten, so machine-local edits
@@ -110,10 +114,13 @@ is transcripts, history, caches and a 99 MB `plugins/` tree that chezmoi must
 leave alone.
 
 All four apply only where `personal` is true. `.chezmoiignore` skips `.claude`
-otherwise, and where `personal` is false `.chezmoiremove` deletes the four
-targets by exact path. A new file under `dot_claude/` needs its own line in that
-`.chezmoiremove` block, or a machine switched to false keeps its old copy. Never
-use a glob there: it would reach Claude Code's own state.
+otherwise. Where `personal` is false,
+`.chezmoiscripts/run_once_after_remove-claude-config.sh.tmpl` deletes the four
+targets by exact path. It runs **once** per machine, so Claude config written by
+hand there afterwards is safe. `.chezmoiremove` would delete on every apply
+instead. A new file under `dot_claude/` needs its own line in that script, or a
+machine switched to false keeps its old copy. Never use a glob there: it would
+reach Claude Code's own state.
 
 `settings.json` is untracked on purpose. Claude Code rewrites it, and its
 `autoMode` block caches per-project infrastructure detail that this repo is too
@@ -152,6 +159,9 @@ target path under `$HOME`.
 `run_onchange_after_build-bat-cache.sh.tmpl` runs `bat cache --build`, which is
 what makes the externally-fetched theme selectable. It re-runs when the hash of
 `dot_config/exact_bat/config` embedded in it changes.
+
+`run_once_after_remove-claude-config.sh.tmpl` renders empty unless `personal` is
+false, and chezmoi skips empty scripts. See Claude Code config.
 
 ### Conditional Ignore
 `.chezmoiignore` excludes repo docs (`README.md`, `CLAUDE.md`) from being applied to `$HOME`.

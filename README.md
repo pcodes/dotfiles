@@ -95,9 +95,11 @@ whenever the requested theme changes.
 ## Claude Code
 
 Personal machines only — the MacBook Air and the CachyOS box, not the work Mac.
-`chezmoi init` asks "Personal machine?" once. Answering no means chezmoi writes
-none of the tracked files below, and removes them if an earlier apply put them
-there. The plugin runbook is manual, so skip it on that machine too.
+`chezmoi init` asks "Personal machine (gets Claude Code config)" once. Answering
+no means chezmoi writes none of the tracked files below, and on its first apply
+there deletes any copies already present. It does that once only, so Claude
+config written there by hand afterwards stays. The plugin runbook is manual, so
+skip it on that machine too.
 
 Tracked: `~/.claude/CLAUDE.md`, the statusline script, the ADHD-mode marker, and
 the `~/.claude/skills` symlink.

@@ -14,8 +14,7 @@ CLAUDE.md
 {{ end }}
 
 # ~/.claude is for personal machines only (`personal` in .chezmoi.toml.tmpl).
-# A machine that has not run `chezmoi init` since the switch was added has no
-# answer yet, and counts as not personal.
+# A config with no `personal` key counts as not personal.
 {{ if not (dig "personal" false .) }}
 .claude
 {{ end }}
