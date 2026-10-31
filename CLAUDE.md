@@ -63,6 +63,20 @@ elsewhere. Not `hostname` — that follows DHCP and drifts between names on one
 machine. Renaming a machine means renaming its `hosts/` file and re-applying;
 nothing warns when a host file stops matching, it just stops being sourced.
 
+### Personal Switch
+`.chezmoi.toml.tmpl` asks one question at `chezmoi init`, including the
+bootstrap's `chezmoi init --apply pcodes`: `personal`, a bool stored in the
+untracked `~/.config/chezmoi/chezmoi.toml`. True on the MacBook Air and the
+CachyOS box, false on the work Mac. It gates the Claude Code config (below).
+
+The key is absent on a machine that has not re-run `chezmoi init` since the
+switch was added, and `missingkey=error` makes a bare `.personal` fail there.
+Read it with `dig "personal" false .`, or guard with `hasKey . "personal"` when
+absent and false must differ.
+
+To answer without a prompt, `--promptBool` takes the prompt text, not the key:
+`chezmoi init --promptBool 'Personal machine (gets Claude Code config)=true'`.
+
 ### Local Customization Pattern
 `create_` files are created once and never overwritten, so machine-local edits
 survive `chezmoi apply`:
@@ -94,6 +108,12 @@ applying a change that adds or narrows an `exact_` directory.
 the `empty_dot_i-have-adhd-always` flag, and `symlink_skills.tmpl`. It is **not** an `exact_` directory — the rest of `~/.claude`
 is transcripts, history, caches and a 99 MB `plugins/` tree that chezmoi must
 leave alone.
+
+All four apply only where `personal` is true. `.chezmoiignore` skips `.claude`
+otherwise, and where `personal` is false `.chezmoiremove` deletes the four
+targets by exact path. A new file under `dot_claude/` needs its own line in that
+`.chezmoiremove` block, or a machine switched to false keeps its old copy. Never
+use a glob there: it would reach Claude Code's own state.
 
 `settings.json` is untracked on purpose. Claude Code rewrites it, and its
 `autoMode` block caches per-project infrastructure detail that this repo is too
@@ -137,6 +157,7 @@ what makes the externally-fetched theme selectable. It re-runs when the hash of
 `.chezmoiignore` excludes repo docs (`README.md`, `CLAUDE.md`) from being applied to `$HOME`.
 It also gates files by OS: `.zprofile` is macOS-only, and the kitty
 `.desktop` override is Linux-only.
+`.claude` is skipped where `personal` is not true.
 
 ## Linters/Formatters
 

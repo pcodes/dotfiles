@@ -12,3 +12,14 @@
 # $HOMEBREW_PREFIX/share/zsh/site-functions.
 .profile
 .zsh_completions
+
+# Unlike the entries above, this block is permanent. A machine that answered no
+# to `personal` loses the Claude config it was given before. Exact paths only:
+# the rest of ~/.claude is Claude Code's own (settings.json, transcripts). A
+# machine with no answer yet keeps what it has.
+{{ if and (hasKey . "personal") (not .personal) }}
+.claude/CLAUDE.md
+.claude/.i-have-adhd-always
+.claude/statusline-command.sh
+.claude/skills
+{{ end }}

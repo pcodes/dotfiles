@@ -94,8 +94,13 @@ whenever the requested theme changes.
 
 ## Claude Code
 
-Tracked: `~/.claude/CLAUDE.md`, the statusline script, and the `~/.claude/skills`
-symlink.
+Personal machines only — the MacBook Air and the CachyOS box, not the work Mac.
+`chezmoi init` asks "Personal machine?" once. Answering no means chezmoi writes
+none of the tracked files below, and removes them if an earlier apply put them
+there. The plugin runbook is manual, so skip it on that machine too.
+
+Tracked: `~/.claude/CLAUDE.md`, the statusline script, the ADHD-mode marker, and
+the `~/.claude/skills` symlink.
 Everything else under `~/.claude` is state the tool owns — transcripts, history,
 caches, `plugins/` — and stays out.
 
