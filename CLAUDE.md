@@ -167,7 +167,14 @@ false, and chezmoi skips empty scripts. See Claude Code config.
 `.chezmoiignore` excludes repo docs (`README.md`, `CLAUDE.md`) from being applied to `$HOME`.
 It also gates files by OS: `.zprofile` is macOS-only, and the kitty
 `.desktop` override is Linux-only.
-`.claude` is skipped where `personal` is not true.
+`.claude` and `.config/1Password` are skipped where `personal` is not true.
+
+### 1Password SSH agent
+`dot_config/1Password/ssh/agent.toml` lists the vaults the agent serves keys
+from: Private and Homelab. Its presence replaces the agent's built-in default
+(Private only), so removing the Private entry drops every personal key. A
+listed vault that doesn't exist is skipped silently; a file that fails to parse
+stops the agent, and 1Password reports why under Settings → Developer.
 
 ## Linters/Formatters
 

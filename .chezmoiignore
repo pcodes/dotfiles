@@ -16,6 +16,9 @@ CLAUDE.md
 
 # ~/.claude is for personal machines only (`personal` in .chezmoi.toml.tmpl).
 # A config with no `personal` key counts as not personal.
+# The 1Password agent.toml is too: it replaces the agent's default vault list,
+# so on the work Mac it would stop serving keys from the work account.
 {{ if not (dig "personal" false .) }}
 .claude
+.config/1Password
 {{ end }}

@@ -1,0 +1,9 @@
+# Which vaults the 1Password SSH agent serves keys from. This file replaces
+# the agent's default (the Private vault only), so Private must stay listed.
+# A vault that does not exist on this account is skipped, not an error.
+
+[[ssh-keys]]
+vault = "Private"
+
+[[ssh-keys]]
+vault = "Homelab"
