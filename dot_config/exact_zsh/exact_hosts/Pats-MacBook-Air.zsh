@@ -13,10 +13,12 @@
 # account, which can read only the Homelab vault. The token is read from
 # Private with one Touch ID prompt and exported to that command alone, so the
 # session keeps working when the desktop app locks. env -u keeps an inherited
-# token from hiding Private from the op read.
+# token from hiding Private from the op read. An empty token would leave op on
+# the desktop-app login, which reaches Private, so it stops the run instead.
 homelab() {
   local token
   token=$(env -u OP_SERVICE_ACCOUNT_TOKEN op read 'op://Private/Homelab Service Account Token/password') || return
+  [[ -n $token ]] || { print -u2 "homelab: the service-account token came back empty"; return 1; }
   (( $# )) || set -- claude
   OP_SERVICE_ACCOUNT_TOKEN=$token "$@"
 }
